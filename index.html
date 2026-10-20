@@ -84,11 +84,11 @@ p{margin:0 0 14px;color:var(--ink-2)}
 .menu .panel .btn{justify-content:center;margin-top:6px}
 
 /* hero */
-.hero{position:relative;overflow:hidden;padding:72px 0 40px}
+.hero{position:relative;overflow:hidden;padding:72px 0 calc(16.7vw + 32px)}
 .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:900px;height:700px;background:radial-gradient(closest-side,rgba(126,166,255,.16),transparent 70%);pointer-events:none}
 .hero::after{content:"";position:absolute;left:-200px;bottom:-260px;width:720px;height:520px;background:radial-gradient(closest-side,rgba(226,182,94,.09),transparent 70%);pointer-events:none}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center}
-@media (min-width:1101px){.stage{width:calc(100% + 72px);margin-right:-72px}}
+@media (min-width:1301px){.stage{width:calc(100% + 72px);margin-right:-72px}}
 .hero h1{font-size:clamp(38px,4.2vw,58px);max-width:17ch}
 .hero .lede{margin-top:22px}
 .actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:30px}
@@ -98,6 +98,20 @@ p{margin:0 0 14px;color:var(--ink-2)}
 
 /* device stage */
 /* device stage: one real finding, shown as the app lays it out at the visitor's screen width */
+/* hero backdrop: the real hourly VELO volume (OP Mainnet, 15–16 Oct 2026) behind the finding shown in the devices */
+.pulse{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;pointer-events:none;opacity:.75;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
+.pulse .line{fill:none;stroke:rgba(126,166,255,.55);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.pulse .base{stroke:rgba(232,237,246,.28);stroke-width:1.2;stroke-dasharray:6 7;vector-effect:non-scaling-stroke}
+.pulse .spike circle{fill:var(--brass)} .pulse .spike .halo{fill:rgba(226,182,94,.16)}
+.pulse .spike text{fill:rgba(226,182,94,.95);font:600 17px/1 var(--display);letter-spacing:.02em}
+.hero-grid,.hero .wrap{position:relative;z-index:1}
+@media (prefers-reduced-motion:no-preference){
+  .pulse .line{stroke-dasharray:1;stroke-dashoffset:1;animation:trace 2.4s cubic-bezier(.4,0,.2,1) .35s forwards}
+  .pulse .area,.pulse .spike{opacity:0;animation:appear .8s ease-out 2.3s forwards}
+  @keyframes trace{to{stroke-dashoffset:0}}
+  @keyframes appear{to{opacity:1}}
+}
 .stage{position:relative;perspective:1800px}
 .dev{background:#0B1120;border:1px solid #2A3756;box-shadow:0 40px 80px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.03) inset}
 .dev img{display:block;width:100%;height:auto}
@@ -110,13 +124,21 @@ p{margin:0 0 14px;color:var(--ink-2)}
 .slate .screen{aspect-ratio:3/4;overflow:hidden;border-radius:20px}
 .handset{position:absolute;left:1%;bottom:-10%;width:min(30%,228px);border-radius:38px;padding:9px;background:#060A14}
 .handset .screen{position:relative;aspect-ratio:9/19.5;overflow:hidden;border-radius:30px;padding-top:26px;background:#0E1525}
+.slate::before{content:"";position:absolute;top:5px;left:50%;width:6px;height:6px;translate:-50% 0;border-radius:50%;background:#1B2436}
+@media (min-width:1101px){
+  .slate{display:block;position:absolute;left:1%;bottom:-13%;width:min(32%,232px);margin:0;border-radius:24px;padding:11px 9px;z-index:2}
+  .slate .screen{border-radius:15px}
+  .handset{left:auto;right:1%;bottom:-17%;width:min(21%,150px);z-index:3}
+  .stage{margin-bottom:104px}
+}
+@media (min-width:1301px){.handset{right:calc(72px + 1%)}}
 .handset .screen::before{content:"";position:absolute;top:8px;left:50%;width:28%;height:14px;translate:-50% 0;border-radius:8px;background:#060A14}
 .slate img,.handset img{height:100%;object-fit:cover;object-position:top}
 .stage-note{margin:34px 0 0;font-size:13.5px;color:var(--ink-3);max-width:70ch}
-@media (min-width:1101px){.stage{margin-bottom:56px}}
 @media (prefers-reduced-motion:no-preference){
   .dev{animation:settle .9s cubic-bezier(.2,.7,.2,1) both}
-  .handset{animation-delay:.2s}
+  .slate{animation-delay:.12s}
+  .handset{animation-delay:.24s}
   @keyframes settle{from{opacity:0;translate:0 22px}to{opacity:1;translate:0 0}}
 }
 
@@ -238,9 +260,8 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
   .hero-grid{grid-template-columns:minmax(0,1fr);gap:56px}
   .win{display:none} .slate{display:block}
   .handset{left:auto;right:max(0px,calc(50% - 312px));bottom:-7%;width:min(30%,208px)}
-  .stage{margin-bottom:40px}
   h1{max-width:16ch}
-  .stage{max-width:880px;margin:0 auto;width:100%}
+  .stage{max-width:880px;margin:0 auto 72px;width:100%}
   .intro{grid-template-columns:minmax(0,1fr);gap:18px}
   .feature,.feature.flip{grid-template-columns:minmax(0,1fr);gap:28px}
   .feature.flip .copy{order:0}
@@ -262,7 +283,8 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
   body{font-size:16px}
   .wrap{padding:0 18px}
   .top .brand{font-size:16.5px}
-  .hero{padding:44px 0 24px}
+  .hero{padding:44px 0 calc(16.7vw + 28px)}
+  .pulse .spike text{display:none}
   .slate{display:none} .stage{margin-bottom:0}
   .handset{position:relative;left:auto;right:auto;bottom:auto;margin:0 auto;width:min(78%,276px)}
   .ledger{grid-template-columns:minmax(0,1fr)} .ledger dt{padding-bottom:0;border-bottom:none}
@@ -323,6 +345,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
 
 <main id="main">
 <section class="hero" id="top">
+  <svg class="pulse" viewBox="0 0 1440 240" aria-hidden="true" focusable="false"><defs><linearGradient id="pulse-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7EA6FF" stop-opacity=".2"/><stop offset="1" stop-color="#7EA6FF" stop-opacity="0"/></linearGradient></defs><path class="area" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1 L1416.0 226 L24.0 226 Z" fill="url(#pulse-fill)"/><line class="base" x1="24" x2="1416" y1="201.9" y2="201.9"/><path class="line" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1" pathLength="1"/><g class="spike"><circle cx="859.2" cy="75.2" r="11" class="halo"/><circle cx="859.2" cy="75.2" r="4"/><text x="871.2" y="80.2">7.43×</text></g><g class="spike"><circle cx="1068.0" cy="41.1" r="11" class="halo"/><circle cx="1068.0" cy="41.1" r="4"/><text x="1080.0" y="46.1">7.25×</text></g></svg>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Self-hosted on-chain analytics for DeFi teams</span>
@@ -349,7 +372,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
       </div>
     </div>
   </div>
-  <div class="wrap"><p class="stage-note">Real screens from the self-hosted web application. The pictures follow your screen: the same VELO finding as the app lays it out in a desktop, tablet (820 px) and phone (390 px) browser — computed from swap events collected over public JSON-RPC (historical snapshot of 17 Oct 2026, not live). It is a responsive web app, not a native app.</p></div>
+  <div class="wrap"><p class="stage-note">Real screens from the self-hosted web application: the same VELO finding as the app lays it out in a desktop, tablet (820 px) and phone (390 px) browser. Behind them, the real hourly VELO volume on OP Mainnet for 15–16 Oct 2026, with the frozen baseline dashed and the two flagged spikes marked. Historical snapshot computed from swap events collected over public JSON-RPC — not live. It is a responsive web app, not a native app.</p></div>
 </section>
 
 <section class="band" aria-labelledby="coverage-h">
