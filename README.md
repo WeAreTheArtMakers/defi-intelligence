@@ -74,7 +74,7 @@ application. USD values are not shown.
 - **93.33M ARB** in pool-event volume from raw on-chain amounts; **23,700** swaps had a stablecoin on the other side.
 - Pools: WETH/ARB 0.05% (40,956 events), ARB/USDC 0.05% (18,586), ARB/USDC 0.3% (5,114), WETH/ARB 0.3% (107, all
   after 17 Oct 04:00 UTC).
-- **10** anomaly findings in the window, none of high severity.
+- **1** anomaly finding under the current method: address concentration on 16 Oct, medium severity; none of high severity.
 - Selected-pool event measurements: not the total ARB market and not transaction-net trading volume.
 
 **VELO on OP Mainnet** — 16 Oct 2026 12:00 → 17 Oct 2026 00:00 UTC:
