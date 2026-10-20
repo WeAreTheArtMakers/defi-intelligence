@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WATAM DeFi Intelligence — On-chain analytics your team can verify</title>
+<meta name="description" content="WATAM DeFi Intelligence is self-hosted on-chain analytics for DeFi protocol, token and research teams: swap data collected and checked on your own infrastructure, pool-level token analysis, anomaly findings with their evidence, and reports that state exactly what they cover.">
+<link rel="canonical" href="https://wearetheartmakers.github.io/defi-intelligence/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WATAM DeFi Intelligence">
+<meta property="og:title" content="WATAM DeFi Intelligence — On-chain analytics your team can verify">
+<meta property="og:description" content="Your infrastructure. Your blockchain data. Verifiable intelligence.">
+<meta property="og:url" content="https://wearetheartmakers.github.io/defi-intelligence/">
+<meta property="og:image" content="https://wearetheartmakers.github.io/defi-intelligence/assets/img/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="WATAM DeFi Intelligence — On-chain analytics your team can verify">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WATAM DeFi Intelligence — On-chain analytics your team can verify">
+<meta name="twitter:description" content="Your infrastructure. Your blockchain data. Verifiable intelligence.">
+<meta name="twitter:image" content="https://wearetheartmakers.github.io/defi-intelligence/assets/img/og-card.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://wearetheartmakers.github.io/defi-intelligence/#watam","name":"WATAM — We Are The Art Makers","alternateName":"WATAM","email":"admin@wearetheartmakers.com"},
+{"@type":"SoftwareApplication","name":"WATAM DeFi Intelligence","applicationCategory":"BusinessApplication","operatingSystem":"Linux (self-hosted, Docker)","description":"Self-hosted on-chain analytics for DeFi protocol, token and research teams, running on the customer's own infrastructure.","url":"https://wearetheartmakers.github.io/defi-intelligence/","publisher":{"@id":"https://wearetheartmakers.github.io/defi-intelligence/#watam"}}
+]}
+</script>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A1020">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/ibm-plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-condensed-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Plex Sans";font-style:normal;font-weight:300 700;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Plex Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/ibm-plex-sans-condensed-600-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  --night:#0A1020; --deep:#070C18; --surface:#111A2E; --raised:#17223B; --line:#24314D; --line-soft:#1B2640;
+  --ink:#E8EDF6; --ink-2:#A7B2C6; --ink-3:#8590A8;
+  --blue:#7EA6FF; --brass:#E2B65E; --brass-ink:#1A1407; --amber:#E7A951;
+  --display:"Plex Condensed","Plex Sans",system-ui,sans-serif; --text:"Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-sm:8px; --r-md:14px; --r-lg:22px; --wrap:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--night);color:var(--ink);font:400 17px/1.6 var(--text);font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:#A9C3FF}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-999px;top:12px;background:var(--brass);color:var(--brass-ink);padding:8px 14px;border-radius:var(--r-sm);font-weight:600;z-index:20}
+.skip:focus{left:12px}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em;margin:0;color:var(--ink)}
+h1{font-size:clamp(40px,4.9vw,68px);line-height:1.03;letter-spacing:-.02em;max-width:15ch}
+h2{font-size:clamp(30px,3.4vw,44px);line-height:1.08;max-width:22ch}
+h3{font-size:22px;line-height:1.2}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lede{font-size:clamp(18px,1.6vw,20px);line-height:1.55;max-width:58ch;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px/1 var(--text);padding:15px 22px;border-radius:12px;text-decoration:none;background:var(--brass);color:var(--brass-ink);border:1px solid #F0CD86;box-shadow:0 10px 30px -12px rgba(226,182,94,.55);transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn:hover{color:var(--brass-ink);background:#ECC575;transform:translateY(-1px);box-shadow:0 14px 34px -12px rgba(226,182,94,.7)}
+.btn-quiet{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn-quiet:hover{background:var(--surface);color:var(--ink);box-shadow:none}
+.btn-sm{padding:10px 16px;font-size:15px}
+
+/* header */
+.top{position:sticky;top:0;z-index:10;background:rgba(10,16,32,.82);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line-soft)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:68px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font:600 19px/1 var(--display);letter-spacing:.005em}
+.brand svg{flex:none}
+.brand-sub{color:var(--ink-2);font-weight:600}
+.eyebrow{display:inline-block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a{color:var(--ink-2);text-decoration:none;font-size:15px}
+.nav a:hover{color:var(--ink)}
+.nav a.btn,.nav a.btn:hover,.menu .panel a.btn,.menu .panel a.btn:hover{color:var(--brass-ink)}
+.menu{display:none;position:relative}
+.menu summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:15px}
+.menu summary::-webkit-details-marker{display:none}
+.menu[open] summary{background:var(--surface)}
+.menu .panel{position:absolute;right:0;top:calc(100% + 10px);min-width:230px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:10px;display:grid;gap:2px;box-shadow:0 24px 48px -20px rgba(0,0,0,.7)}
+.menu .panel a{padding:11px 12px;border-radius:10px;color:var(--ink);text-decoration:none}
+.menu .panel a:hover{background:var(--raised)}
+.menu .panel .btn{justify-content:center;margin-top:6px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:72px 0 40px}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:900px;height:700px;background:radial-gradient(closest-side,rgba(126,166,255,.16),transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;left:-200px;bottom:-260px;width:720px;height:520px;background:radial-gradient(closest-side,rgba(226,182,94,.09),transparent 70%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center}
+@media (min-width:1101px){.stage{width:calc(100% + 72px);margin-right:-72px}}
+.hero h1{font-size:clamp(38px,4.2vw,58px);max-width:17ch}
+.hero .lede{margin-top:22px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:30px}
+.actions a.link{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.actions a.link:hover{border-color:var(--blue)}
+.assure{margin-top:26px;font-size:14px;color:var(--ink-3);max-width:52ch}
+
+/* device stage */
+.stage{position:relative;aspect-ratio:1.25/1;perspective:2200px}
+.dev{position:absolute;background:#0B1120;border:1px solid #2A3756;box-shadow:0 40px 80px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.03) inset}
+.dev img{width:100%;height:100%;object-fit:cover;object-position:top left;border-radius:inherit}
+.bar{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px;background:#0E1628;border-bottom:1px solid #1E2944}
+.bar i{width:8px;height:8px;border-radius:50%;background:#2B3854;flex:none}
+.url{flex:1;min-width:0;height:18px;border-radius:9px;background:#0A1222;border:1px solid #1E2944;color:#7D89A2;font:500 10.5px/16px var(--text);padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.laptop{right:0;top:2%;width:86%;border-radius:12px;transform:rotateY(-7deg) rotateX(2deg);transform-origin:right center}
+.laptop .screen{aspect-ratio:16/10;overflow:hidden;border-radius:0 0 11px 11px}
+.laptop::after{content:"";position:absolute;left:-4%;right:-4%;bottom:-16px;height:16px;border-radius:0 0 18px 18px;background:linear-gradient(#1C2640,#0D1324);border:1px solid #2A3756;border-top:none}
+.tablet{left:0;bottom:2%;width:36%;border-radius:20px;padding:8px;background:#060A14}
+.tablet .bar,.phone .bar{height:22px;border-radius:12px 12px 0 0;padding:0 8px}
+.tablet .bar .url,.phone .bar .url{font-size:8.5px;height:14px;line-height:12px}
+.tablet .screen{aspect-ratio:3/4.1;overflow:hidden;border-radius:0 0 12px 12px}
+.phone{right:6%;bottom:-3%;width:21%;border-radius:28px;padding:7px;background:#060A14}
+.phone .screen{aspect-ratio:9/18.4;overflow:hidden;border-radius:0 0 20px 20px}
+.phone .bar{border-radius:21px 21px 0 0}
+.stage.single{aspect-ratio:auto;perspective:1800px}
+.win{position:relative;width:min(100%,600px);margin-left:auto;border-radius:12px;transform:rotateY(-5deg);transform-origin:right center}
+.win .screen{overflow:hidden;border-radius:0 0 11px 11px}
+.win img{height:auto;display:block}
+.stage-note{margin:34px 0 0;font-size:13.5px;color:var(--ink-3);max-width:70ch}
+@media (prefers-reduced-motion:no-preference){
+  .dev{animation:settle .9s cubic-bezier(.2,.7,.2,1) both}
+  .laptop{animation-name:settle-laptop}
+  .tablet{animation-delay:.18s}
+  .phone{animation-delay:.32s}
+  @keyframes settle{from{opacity:0;translate:0 26px}to{opacity:1;translate:0 0}}
+  @keyframes settle-laptop{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+}
+
+/* bands */
+section{scroll-margin-top:84px}
+.band{padding:96px 0;border-top:1px solid var(--line-soft)}
+.band.alt{background:linear-gradient(180deg,var(--deep),var(--night))}
+.intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:end;margin-bottom:48px}
+.intro p{margin:0}
+
+/* coverage ledger */
+.ledger{display:grid;grid-template-columns:180px 1fr;border-top:1px solid var(--line);margin-top:28px}
+.ledger dt,.ledger dd{margin:0;padding:18px 0;border-bottom:1px solid var(--line)}
+.ledger dt{color:var(--ink-3);font-size:15px}
+.ledger dd{display:flex;flex-wrap:wrap;gap:8px 10px}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-size:15px}
+.tag .dot{width:7px;height:7px;border-radius:50%;background:var(--brass)}
+.tag.muted{color:var(--ink-2)} .tag.muted .dot{background:#5D6A86}
+a.tag{text-decoration:none} a.tag:hover{color:var(--ink);border-color:var(--blue)}
+
+/* audiences */
+.aud{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px}
+.aud div{padding:26px 0 26px 22px;border-left:2px solid var(--line);margin-bottom:14px}
+.aud div:hover{border-left-color:var(--blue)}
+.aud h3{font-size:21px;margin-bottom:8px}
+.aud p{margin:0;font-size:16px}
+
+/* pipeline (a real sequence) */
+.pipe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;counter-reset:step;position:relative;margin:0;padding:0}
+.pipe li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 26px 26px;position:relative}
+.pipe li::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--blue);color:var(--blue);font:600 15px/1 var(--text);margin-bottom:18px}
+.pipe li:not(:last-child)::after{content:"";position:absolute;top:44px;right:-23px;width:24px;height:1px;background:var(--blue);opacity:.5}
+.pipe h3{margin-bottom:10px}
+.pipe p{margin:0;font-size:16px}
+
+/* feature rows */
+.feature{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center;padding:56px 0}
+.feature + .feature{border-top:1px solid var(--line-soft)}
+.feature.flip .copy{order:2}
+.feature h3{font-size:clamp(26px,2.6vw,34px);margin-bottom:14px}
+.feature ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.feature li{position:relative;padding-left:22px;color:var(--ink-2);font-size:16px}
+.feature li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:1px;background:var(--brass)}
+.shot{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:0 30px 60px -32px rgba(0,0,0,.8)}
+figure{margin:0}
+figcaption{font-size:14px;color:var(--ink-3);margin-top:12px}
+
+/* AI */
+.ai-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;align-items:start;max-width:880px}
+.ai-phone{max-width:300px;justify-self:center}
+.ai-phone .dev{position:relative;inset:auto;width:100%;transform:none}
+.ai-phone .screen img{object-position:bottom center}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{color:var(--ink-3);font-weight:500;font-size:14px;background:#0F182B}
+td{color:var(--ink-2)} td:first-child{color:var(--ink)}
+.num{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.st{white-space:nowrap;font-weight:600}
+.st.ok{color:var(--brass)} .st.part{color:var(--blue)} .st.no{color:var(--ink-3)}
+.note{font-size:14.5px;color:var(--ink-3);margin-top:14px;max-width:80ch}
+
+/* research cases */
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.case{border-top:2px solid var(--brass);padding-top:18px}
+.case h3{font-size:21px;margin-bottom:6px}
+.case .when{font-size:14px;color:var(--ink-3);margin-bottom:14px}
+.case p{font-size:16px}
+.xcase{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:40px;margin-bottom:56px}
+.xcase-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:12px 48px;align-items:end;margin-bottom:28px}
+.xcase-head h3{font-size:clamp(26px,2.6vw,34px)}
+.xcase-head .when{font-size:15px;color:var(--ink-3);margin:8px 0 0}
+.xcase-head p.lead{margin:0;font-size:16px}
+.kicker{display:inline-block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin-bottom:10px}
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:0 0 32px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--r-md);overflow:hidden}
+.figs div{background:#0F182B;padding:20px 20px 18px}
+.figs dt{font:600 clamp(24px,2.4vw,30px)/1.1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:8px}
+.figs dd{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.xcase-body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:start;margin-bottom:36px}
+.xcase h4{font:600 18px/1.3 var(--display);color:var(--ink);margin:0 0 14px}
+.checks{margin:0;padding:0;list-style:none;display:grid;gap:14px}
+.checks li{position:relative;padding-left:22px;color:var(--ink-2);font-size:15.5px}
+.checks li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:1px;background:var(--brass)}
+.checks b{color:var(--ink);font-weight:600}
+.pools td:nth-child(3),.pools td:nth-child(4),.pools th:nth-child(3),.pools th:nth-child(4){text-align:right;white-space:nowrap}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.pools code{font:500 13.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink-3)}
+.pools tfoot td{color:var(--ink);font-weight:600;border-top:1px solid var(--line)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin-top:36px}
+.aside{border-left:2px solid var(--line);padding-left:20px;font-size:15px;color:var(--ink-3);margin-top:32px}
+
+/* pilot */
+.pilot{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:56px;background:linear-gradient(135deg,#131D33,#0D1528);border:1px solid var(--line);border-radius:28px;padding:56px;position:relative;overflow:hidden}
+.pilot::before{content:"";position:absolute;right:-160px;top:-160px;width:460px;height:460px;background:radial-gradient(closest-side,rgba(226,182,94,.14),transparent 70%)}
+.pilot h2{max-width:16ch}
+.pilot .list{margin:0;padding:0;list-style:none;display:grid;gap:18px;position:relative}
+.pilot .list b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+.pilot .list p{margin:0;font-size:16px}
+.contact{margin-top:26px;font-size:15px;color:var(--ink-3)}
+.email{color:var(--ink);font-weight:500;user-select:all;-webkit-user-select:all;border-bottom:1px dashed var(--line);padding-bottom:1px}
+
+/* limits + footer */
+.limits{columns:2 380px;column-gap:56px;margin:0;padding:0;list-style:none}
+.limits li{break-inside:avoid;padding:14px 0 14px 22px;position:relative;color:var(--ink-2);font-size:16px;border-bottom:1px solid var(--line-soft)}
+.limits li::before{content:"";position:absolute;left:0;top:1.45em;width:8px;height:8px;border:1px solid var(--ink-3);border-radius:50%}
+footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink-3);font-size:15px}
+.foot{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:40px}
+.foot h4{font:600 15px/1.3 var(--text);color:var(--ink);margin:0 0 12px}
+.foot p{color:var(--ink-3);font-size:15px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a{color:var(--ink-2);text-decoration:none} .foot a:hover{color:var(--ink)}
+.foot a.btn,.foot a.btn:hover{color:var(--brass-ink)}
+
+/* responsive */
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:56px}
+  .win{transform:none;margin:0 auto;width:min(100%,640px)}
+  h1{max-width:16ch}
+  .stage{max-width:880px;margin:0 auto;width:100%}
+  .intro{grid-template-columns:minmax(0,1fr);gap:18px}
+  .feature,.feature.flip{grid-template-columns:minmax(0,1fr);gap:28px}
+  .feature.flip .copy{order:0}
+  .ai-grid{grid-template-columns:minmax(0,1fr)}
+  .pilot{grid-template-columns:minmax(0,1fr);padding:40px}
+  .foot{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .nav{display:none} .menu{display:block}
+  .pipe{grid-template-columns:minmax(0,1fr)} .pipe li:not(:last-child)::after{display:none}
+  .cases{grid-template-columns:minmax(0,1fr)}
+  .figs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .xcase-head,.xcase-body,.split{grid-template-columns:minmax(0,1fr);gap:28px}
+  .xcase{padding:28px}
+  .aud{grid-template-columns:minmax(0,1fr)}
+  .band{padding:72px 0}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  .top .brand{font-size:16.5px}
+  .hero{padding:44px 0 24px}
+  .stage{aspect-ratio:1/1.02}
+  .laptop{width:100%;top:0;transform:none}
+  .stage.single{aspect-ratio:auto}
+  .laptop::after{bottom:-10px;height:10px}
+  .tablet{width:46%;bottom:0;left:0}
+  .phone{width:30%;right:2%;bottom:-2%}
+  .bar{height:22px} .url{font-size:8.5px;height:14px;line-height:12px}
+  .tablet .bar,.phone .bar{height:16px} .tablet .url,.phone .url{display:none}
+  .ledger{grid-template-columns:minmax(0,1fr)} .ledger dt{padding-bottom:0;border-bottom:none}
+  .pilot{padding:28px 22px;border-radius:22px}
+  .foot{grid-template-columns:minmax(0,1fr)}
+  th,td{padding:12px 14px}
+  .xcase{padding:22px 18px;border-radius:var(--r-md)}
+  .figs div{padding:16px 14px}
+  .pools thead{display:none}
+  .pools tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding:12px 14px;border-bottom:1px solid var(--line-soft)}
+  .pools tbody tr:last-child{border-bottom:none}
+  .pools td{padding:0;border:none}
+  .pools td:nth-child(1){grid-column:1;grid-row:1;color:var(--ink);font-weight:600}
+  .pools td:nth-child(4){grid-column:2;grid-row:1}
+  .pools td:nth-child(2){grid-column:1;grid-row:2;font-size:14px}
+  .pools td:nth-child(3){grid-column:2;grid-row:2;font-size:14px;color:var(--ink-3)}
+  .pools td:nth-child(4)::after{content:" events";font-weight:400;color:var(--ink-3);font-size:14px}
+  .pools td:nth-child(3):not(:empty)::after{content:" fee"}
+  .pools code{display:inline;margin-left:4px;white-space:nowrap}
+  .pools td.one::after{content:" event"}
+  .pools tfoot tr{border-top:1px solid var(--line);border-bottom:none}
+  .pools tfoot td{border-top:none}
+  .btn{width:100%;justify-content:center}
+  .actions a.link{margin:0 auto}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="WATAM DeFi Intelligence, back to top">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#111A2E" stroke="#2A3756"/><path d="M8 21.5l5-6 4 3.5 7-9" fill="none" stroke="#7EA6FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="10" r="2.6" fill="#E2B65E"/></svg>
+      <span>WATAM <span class="brand-sub">DeFi Intelligence</span></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#product">Product</a>
+      <a href="#ai">AI analyst</a>
+      <a href="#research">Research</a>
+      <a href="#status">What's verified</a>
+      <a href="#deploy">Deployment</a>
+      <a class="btn btn-sm" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a>
+    </nav>
+    <details class="menu">
+      <summary aria-label="Open menu"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Menu</summary>
+      <div class="panel">
+        <a href="#product">Product</a>
+        <a href="#ai">AI analyst</a>
+        <a href="#research">Research</a>
+        <a href="#status">What's verified</a>
+        <a href="#deploy">Deployment</a>
+        <a class="btn btn-sm" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Self-hosted on-chain analytics for DeFi teams</span>
+      <h1>On-chain analytics your team can verify.</h1>
+      <p class="lede">WATAM DeFi Intelligence collects a token's swaps directly from the blockchain, checks that the data is complete, and shows what happened pool by pool — with unusual activity flagged and the evidence attached. It runs on infrastructure you control, and every report states exactly which pools and hours it covers.</p>
+      <div class="actions">
+        <a class="btn" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a>
+        <a class="link" href="#status">See what's verified</a>
+      </div>
+      <p class="assure">Your infrastructure. Your blockchain data. Verifiable intelligence. Deployed per customer — no shared hosted service — and pilots are scoped individually.</p>
+    </div>
+    <div>
+      <div class="stage single" role="group" aria-label="One anomaly finding in the WATAM DeFi Intelligence web application">
+        <div class="dev win">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="url">https://your-server/platform/anomalies</span></div>
+          <div class="screen"><img src="assets/img/anomaly-finding.jpg" width="926" height="938" fetchpriority="high" alt="One anomaly finding for VELO on OP Mainnet: hourly token volume in VELO against a frozen baseline, with facts, method, limitations and provenance"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><p class="stage-note">A real screen from the self-hosted web application: one finding computed from swap events collected over public JSON-RPC (VELO on OP Mainnet, historical snapshot of 17 Oct 2026 — not live, not streaming). The application is a responsive web app for desktop, tablet and phone browsers, not a native app.</p></div>
+</section>
+
+<section class="band" aria-labelledby="coverage-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="coverage-h">Built on receipt-verified data</h2>
+      <p>Swaps are read from public JSON-RPC or your own endpoints, proven complete for every block range and cross-checked before anything is published. A protocol family is supported only after its decoded swaps matched transaction receipts exactly on several networks. Uniswap v4 is verified differently: its pools share one contract and can carry hooks, so each pool is verified on its own, and only individually verified pools are ingested.</p>
+    </div>
+    <dl class="ledger">
+      <dt>Networks</dt>
+      <dd><span class="tag"><span class="dot"></span>Base</span><span class="tag"><span class="dot"></span>Arbitrum One</span><span class="tag"><span class="dot"></span>OP Mainnet</span><span class="tag"><span class="dot"></span>Ethereum</span></dd>
+      <dt>Verified protocol families</dt>
+      <dd><span class="tag"><span class="dot"></span>Uniswap v3-style</span><span class="tag"><span class="dot"></span>Uniswap v2-style</span><span class="tag"><span class="dot"></span>Solidly (Velodrome/Aerodrome v2)</span></dd>
+      <dt>Individually verified pools</dt>
+      <dd><a class="tag" href="#status"><span class="dot"></span>Uniswap v4: six Ethereum pools, each verified on its own</a></dd>
+      <dt>Not counted</dt>
+      <dd><span class="tag muted"><span class="dot"></span>PancakeSwap v3 (decoder only, not verified for ingestion)</span><span class="tag muted"><span class="dot"></span>Other Uniswap v4 pools and networks</span><span class="tag muted"><span class="dot"></span>v4 pools with native ETH or swap-changing hooks</span><span class="tag muted"><span class="dot"></span>Other venues</span></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="band alt" aria-labelledby="who-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="who-h">For teams whose numbers have to hold up</h2>
+      <p>Every figure carries its coverage, its valuation method and the SQL behind it, so analysis can be reproduced, reviewed and shared.</p>
+    </div>
+    <div class="aud">
+      <div><h3>Protocols, DAOs and token teams</h3><p>See how your token trades across chains and pools — volume, liquidity and valuation coverage — and get flagged when activity departs from its baseline.</p></div>
+      <div><h3>Funds and research desks</h3><p>Source-backed token and protocol research with stated coverage, so a conclusion can be traced back to the swaps that produced it.</p></div>
+      <div><h3>Risk and market-integrity analytics</h3><p>Anomaly findings for investigation triage: statistical observations with baselines, limitations and alternative explanations, never accusations.</p></div>
+      <div><h3>Analytics consultancies</h3><p>Client-ready reports from verified data on private infrastructure, with an AI analyst that answers in several languages without inventing numbers.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="how-h">How it works</h2>
+      <p>Three stages, each with its own checks. Nothing reaches a report or an AI answer without passing the stage before it.</p>
+    </div>
+    <ol class="pipe">
+      <li><h3>Verified data</h3><p>Ingestion runs prove block coverage, confirm empty answers with a second provider and publish to ClickHouse only after quality gates pass. USD comes from stablecoin legs or an hourly price feed configured for the installation; unvalued swaps are never counted as $0.</p></li>
+      <li><h3>Analytics and findings</h3><p>Covered-hour metrics, window comparisons and an anomaly engine with frozen baselines. Reports state exactly which pools and hours they cover.</p></li>
+      <li><h3>Evidence-grounded AI</h3><p>The AI phrases answers from the verified facts of each question. Every number must match a fact the sentence cites; anything unproven is replaced by a clearly labelled deterministic answer.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band alt" id="product" aria-labelledby="product-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="product-h">What teams can do with it today</h2>
+      <p>Three analytical tasks the current release supports on its verified networks and protocol families. Each one states what it covers and what it does not.</p>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <h3>Analyse a token pool by pool</h3>
+        <p class="when">Token teams, protocol analytics, research desks</p>
+        <p>Paste a token contract. The application checks it on-chain, finds its pools and says which ones it can decode. It then collects the missing hours through the same gated pipeline and reports swaps, token volume, buyers and sellers, and routing per pool — with the covered hours stated.</p>
+        <p class="note" style="margin-top:10px">Covers the selected pools on supported networks, not the token's whole market.</p>
+      </article>
+      <article class="case">
+        <h3>Triage unusual activity</h3>
+        <p class="when">Risk, market-integrity and research teams</p>
+        <p>The anomaly engine flags volume, activity and liquidity shifts against a baseline frozen at onset, plus concentration, imbalance and repetitive patterns. Every finding carries its facts, method, parameters, limitations and alternative explanations, so it can be checked before anyone acts on it.</p>
+        <p class="note" style="margin-top:10px">A statistical observation, never a claim of intent or manipulation.</p>
+      </article>
+      <article class="case">
+        <h3>Compare two time windows</h3>
+        <p class="when">Growth, treasury and research teams</p>
+        <p>Compare a token's activity before and after a listing, an incentive change or an event. A comparison is marked comparable only when every pool is covered in both windows; otherwise the report says it is incomplete instead of showing a misleading change.</p>
+        <p class="note" style="margin-top:10px">Historical windows that have been ingested; not live streaming.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="ai" aria-labelledby="ai-h">
+  <div class="wrap">
+    <div class="ai-grid">
+      <div>
+        <h2 id="ai-h">An AI analyst that cites its sources</h2>
+        <p class="lede" style="margin-top:18px">Ask in English, Turkish or German and keep the conversation going: follow-up questions keep the token and topic. Each answer is labelled either as a validated AI answer or as a deterministic answer built from the same verified facts.</p>
+        <div class="tw" style="margin-top:30px">
+          <table>
+            <tr><th scope="col">Inference option</th><th scope="col">Status</th><th scope="col">Notes</th></tr>
+            <tr><td>Local models via Ollama</td><td class="st ok">Tested</td><td>Runs on your hardware; a memory guard prevents overloading the host</td></tr>
+            <tr><td>Anthropic Claude API</td><td class="st part">Integrated</td><td>Optional and off by default; no paid call until an administrator authorises it within limits. Live calls not yet verified</td></tr>
+            <tr><td>OpenAI API</td><td class="st part">Integrated</td><td>Same controls as Claude. Live calls not yet verified</td></tr>
+            <tr><td>Self-hosted OpenAI-compatible servers</td><td class="st part">Integration option</td><td>vLLM, llama.cpp, LM Studio or an organisation gateway through the same adapter; GPU serving not yet tested</td></tr>
+          </table>
+        </div>
+        <h3 style="margin-top:44px">Local model benchmark</h3>
+        <p style="margin-top:10px">The same frozen fact set (10 questions in English, Turkish and German; 8 answered by the model, 2 declined by deterministic pre-checks) and the same validators, on a 16 GB machine.</p>
+        <div class="tw">
+          <table>
+            <tr><th scope="col">Model</th><th scope="col">Accepted by validation</th><th scope="col">Grounding failures</th><th scope="col">Avg latency</th><th scope="col">Memory</th></tr>
+            <tr><td>gemma3:4b</td><td class="num">8 / 8</td><td class="num">0</td><td class="num">8.3 s</td><td class="num">2.9 GB</td></tr>
+            <tr><td>qwen3.5:9b</td><td class="num">6 / 8</td><td class="num">2</td><td class="num">22.4 s</td><td class="num">5.7 GB</td></tr>
+          </table>
+        </div>
+        <p class="note">In release testing on 2026-10-17, gemma3:4b answers to an English question and English and Turkish follow-ups were all accepted. In a later run a Turkish answer that cited the wrong facts was rejected and replaced by the deterministic answer — exactly what the validation is for. One machine, not a performance promise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="research" aria-labelledby="cases-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="cases-h">Verified research examples</h2>
+      <p>Reviewed snapshots of historical windows from October 2026. Every figure here was recomputed before publication from swap events our own pipeline collected over public JSON-RPC. USD values are deliberately not shown: they depend on an external price feed. These examples illustrate the method; they are not live data and not a statement about any protocol.</p>
+    </div>
+    <article class="xcase" id="case-arb" aria-labelledby="case-arb-h">
+      <div class="xcase-head">
+        <div>
+          <span class="kicker">Historical research snapshot</span>
+          <h3 id="case-arb-h">ARB on Arbitrum One</h3>
+          <p class="when">14 Oct 2026, 12:00 UTC to 17 Oct 2026, 08:00 UTC · 4 ingested Uniswap v3-style pools · reviewed snapshot, not live</p>
+        </div>
+        <p class="lead">Every Swap event emitted by the selected pools in this window, counted hour by hour. These are selected-pool event measurements: not the total ARB market and not transaction-net trading volume.</p>
+      </div>
+      <dl class="figs">
+        <div><dt>64,763</dt><dd>pool Swap events</dd></div>
+        <div><dt>64,564</dt><dd>distinct transactions</dd></div>
+        <div><dt>68 / 68</dt><dd>hours covered by successful, gated ingestion runs</dd></div>
+        <div><dt>0</dt><dd>duplicate events: each on-chain event is stored exactly once</dd></div>
+        <div><dt>93.33M</dt><dd>ARB in pool-event volume, from raw on-chain amounts</dd></div>
+        <div><dt>23,700</dt><dd>swaps with a stablecoin on the other side</dd></div>
+        <div><dt>4</dt><dd>pools; the fourth contributes 107 events, all after 17 Oct 04:00 UTC</dd></div>
+        <div><dt>10</dt><dd>anomaly findings in the window, none of high severity</dd></div>
+      </dl>
+      <div class="split" style="margin:0 0 32px">
+        <div>
+          <h4>How to read these numbers</h4>
+          <ul class="checks">
+            <li><b>Selected pools, not the market.</b> Only the four ingested pools are measured. Other pools, venues and centralised exchanges are not included.</li>
+            <li><b>Pool events, not net trades.</b> A trade routed through two ingested pools is counted in both; transaction-net volume is reported separately in the application.</li>
+            <li><b>Historical.</b> A reviewed snapshot of an ingested window, published as an example. Nothing on this page is live.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>About USD values</h4>
+          <ul class="checks">
+            <li><b>Not shown here.</b> In the application, USD comes from a stablecoin leg where one exists, otherwise from an hourly price feed configured for the installation.</li>
+            <li><b>Never zero-filled.</b> A swap without a usable price stays unvalued and is counted as such, so coverage is visible instead of hidden.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tw">
+        <table class="pools">
+          <caption class="sr-only">The four ingested ARB pools and their Swap events in the window</caption>
+          <thead><tr><th scope="col">Pair</th><th scope="col">Protocol family and pool</th><th scope="col">Fee tier</th><th scope="col">Swap events</th></tr></thead>
+          <tbody>
+            <tr><td>WETH / ARB</td><td>Uniswap v3-style <code>0xc6f7…396a</code></td><td>0.05%</td><td class="num">40,956</td></tr>
+            <tr><td>ARB / USDC</td><td>Uniswap v3-style <code>0xcda5…dad8</code></td><td>0.05%</td><td class="num">18,586</td></tr>
+            <tr><td>ARB / USDC</td><td>Uniswap v3-style <code>0xaebd…ccc3</code></td><td>0.3%</td><td class="num">5,114</td></tr>
+            <tr><td>WETH / ARB</td><td>Uniswap v3-style <code>0x92c6…8f00</code></td><td>0.3%</td><td class="num">107</td></tr>
+          </tbody>
+          <tfoot><tr><td>4 pools</td><td>receipt-verified Uniswap v3-style decoder</td><td></td><td class="num">64,763</td></tr></tfoot>
+        </table>
+      </div>
+    </article>
+
+    <article class="xcase" id="case-velo" aria-labelledby="case-velo-h">
+      <div class="xcase-head">
+        <div>
+          <span class="kicker">Historical research snapshot</span>
+          <h3 id="case-velo-h">VELO on OP Mainnet</h3>
+          <p class="when">16 Oct 2026, 12:00 UTC to 17 Oct 2026, 00:00 UTC · 12 pools discovered and verified, 6 ingested · reviewed snapshot, not live</p>
+        </div>
+        <p class="lead">An example of what the anomaly engine reports — and of what the data does not cover. Market coverage is partial and the report says so. USD values are not shown (see above).</p>
+      </div>
+      <dl class="figs">
+        <div><dt>12</dt><dd>candidate pools, each verified on-chain and classified as supported</dd></div>
+        <div><dt>6</dt><dd>pools ingested (3 Solidly-style, 3 Uniswap v3-style)</dd></div>
+        <div><dt>65,568</dt><dd>pool Swap events in 12 of 12 covered hours</dd></div>
+        <div><dt>12.68M</dt><dd>VELO in pool-event volume</dd></div>
+        <div><dt>62,302</dt><dd>Solidly-style events carrying 463,647 VELO</dd></div>
+        <div><dt>3,266</dt><dd>Uniswap v3-style events carrying 12.2M VELO</dd></div>
+        <div><dt>58,792</dt><dd>distinct transactions; 0 duplicate events</dd></div>
+        <div><dt>3</dt><dd>high-severity findings from swap counts and token volume: spikes of 7.25×, 7.43× and 12.8× against a frozen baseline</dd></div>
+      </dl>
+      <div class="xcase-body">
+        <figure class="shot"><img src="assets/img/anomaly-finding.jpg" width="926" height="938" loading="lazy" alt="A VELO volume spike finding: chart with frozen baseline and observation window, facts, method, limitations, alternative explanations and provenance"><figcaption>One finding with its facts, method, limitations, alternative explanations and provenance.</figcaption></figure>
+        <div>
+          <h4>What a finding is — and is not</h4>
+          <ul class="checks">
+            <li><b>A statistical observation.</b> A metric moved far from a baseline frozen at onset. The finding states the method, parameters and the data it used.</li>
+            <li><b>Never an accusation.</b> It does not establish intent, manipulation or wash trading, and addresses are not identified entities.</li>
+            <li><b>Alternatives stated up front.</b> Market-wide moves, new liquidity venues, a single large participant or a listing can each explain a spike.</li>
+            <li><b>Coverage is explicit.</b> Only hours covered by successful ingestion runs are analysed; partial market coverage is reported, not hidden.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="band" id="status" aria-labelledby="status-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="status-h">What's verified, and what isn't yet</h2>
+      <p>We separate what has been tested on real data from what is integrated, experimental or not supported. "Reference installation" means our own deployment; every customer installation verifies its own backups and recovery.</p>
+    </div>
+    <div class="tw">
+      <table>
+        <tr><th scope="col">Capability</th><th scope="col">Status</th></tr>
+        <tr><td>Ingestion, token explorer, anomaly engine, reports and window comparisons on Base, Arbitrum One, OP Mainnet and Ethereum</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Uniswap v3-style, Uniswap v2-style and Solidly-style decoders (decoded swaps matched transaction receipts exactly)</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Uniswap v4: six individually verified Ethereum pools (PoolId/PoolKey match, two-provider agreement, sampled receipt reconciliation)</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Access control: every API route requires sign-in by default, organisation roles, personal API tokens, single-use invitations for onboarding</td><td class="st ok">Tested and in production use</td></tr>
+        <tr><td>Sandboxed query engine: file, network and extension access blocked at validation and at execution</td><td class="st ok">Tested and in production use</td></tr>
+        <tr><td>Encrypted off-site backup to Cloudflare R2, restore-verified on a separate isolated server</td><td class="st ok">Verified on our reference installation (Oct 2026)</td></tr>
+        <tr><td>Local models via Ollama, including a multilingual multi-turn conversation</td><td class="st ok">Tested on one machine</td></tr>
+        <tr><td>Self-hosted Docker Compose installation: TLS proxy, first administrator, your own RPC endpoints, upgrade and rollback</td><td class="st part">Tested on Docker Desktop</td></tr>
+        <tr><td>Kubernetes deployment</td><td class="st part">Validated on a local single-node cluster</td></tr>
+        <tr><td>PancakeSwap pools, Solana research, one-click token analysis</td><td class="st part">Experimental</td></tr>
+        <tr><td>Anthropic Claude API and OpenAI API (optional, off by default, your own account)</td><td class="st part">Integrated, live calls not yet verified</td></tr>
+        <tr><td>Dune (optional, off by default, your own account)</td><td class="st part">Integrated, not verified live</td></tr>
+        <tr><td>vLLM and GPU inference servers</td><td class="st no">Not yet verified</td></tr>
+        <tr><td>Other Uniswap v4 pools, other networks, hooks that change swap amounts, native ETH</td><td class="st no">Not supported</td></tr>
+        <tr><td>Hosted multi-tenant SaaS</td><td class="st no">Not offered</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="deploy" aria-labelledby="deploy-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="deploy-h">Deploy it on your own infrastructure</h2>
+      <p>Only the TLS proxy is exposed. ClickHouse, pipelines and inference stay on internal networks, and secrets are encrypted at rest.</p>
+    </div>
+    <div class="tw">
+      <table>
+        <tr><th scope="col">Profile</th><th scope="col">Status</th><th scope="col">Target</th><th scope="col">Notes</th></tr>
+        <tr><td>Business server</td><td class="st part">Tested on Docker Desktop</td><td>Linux with Docker Compose, 32 GB RAM recommended, 50 GB+ persistent storage, optional NVIDIA GPU</td><td>Read-only preflight installer, first-administrator setup, upgrade and rollback by release tag. Not yet installed on a customer server</td></tr>
+        <tr><td>Local evaluation</td><td class="st ok">Tested</td><td>A 16 GB machine</td><td>Small local models, memory guard, automatic ingestion off by default</td></tr>
+        <tr><td>Enterprise</td><td class="st part">Validated locally</td><td>Kubernetes, separate GPU inference servers</td><td>Kubernetes manifests with optional Airflow. Upgrade, rollback, persistence, network policies and backups validated on a local single-node cluster; production clusters, managed cloud, external TLS ingress and GPU inference nodes not yet validated</td></tr>
+      </table>
+    </div>
+    <p class="note">Backups are encrypted before they leave the server, and the key stays with you. Point them at your own S3-compatible bucket for off-site copies; each backup can be restore-verified on a separate, isolated server without modifying production data. On our reference installation an encrypted backup to Cloudflare R2 and its isolated restore were verified end to end in October 2026; each customer installation runs its own backup and restore verification.</p>
+    <p class="note">Starting points, not performance promises: capacity depends on the measured hardware.</p>
+  </div>
+</section>
+
+<section class="band" id="pilot" aria-labelledby="pilot-h">
+  <div class="wrap">
+    <div class="pilot">
+      <div>
+        <h2 id="pilot-h">Let's scope a private pilot</h2>
+        <p class="lede" style="margin-top:18px">Tell us which tokens, protocols and networks matter to you. The first step is a discovery conversation; if it fits, we agree a fixed, measurable pilot scope in writing before anything is installed.</p>
+        <div class="actions"><a class="btn" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a></div>
+        <p class="contact">Opens a short email template: organisation, contact, what you want to analyse, preferred deployment and AI. Or write to <a class="email" href="mailto:admin@wearetheartmakers.com">admin@wearetheartmakers.com</a></p>
+      </div>
+      <ul class="list">
+        <li><b>The first conversation covers</b><p>Your analytical questions; the chains, tokens, pools and data sources involved; deployment and data-handling constraints; integrations you need; and the current limitations that apply to your case.</p></li>
+        <li><b>You provide</b><p>A Linux server with Docker (32 GB RAM recommended, 50 GB+ storage), optionally your own RPC endpoints and a local or cloud AI model.</p></li>
+        <li><b>We never ask for</b><p>Confidential datasets, API credentials, private keys or passwords — not by email and not during the pilot.</p></li>
+        <li><b>Before anything is deployed</b><p>Pilot scope, deployment feasibility, data-source permissions, licensing and commercial terms are agreed in writing. A first conversation is not a commitment on either side.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" aria-labelledby="limits-h">
+  <div class="wrap">
+    <div class="intro"><h2 id="limits-h">Limitations</h2><p>Stated plainly, so you know what the numbers cover.</p></div>
+    <ul class="limits">
+      <li>Only the listed networks, verified protocol families and individually verified pools are analysed, and only pools that were discovered and ingested. Other venues are not counted, so no figure on this page is a token's whole market.</li>
+      <li>Pool-event volume counts a routed trade in every ingested pool it passes through. Transaction-net volume is reported separately.</li>
+      <li>The examples on this page cover historical, ingested windows. Nothing here is live, and the page connects to no API.</li>
+      <li>AI answer quality depends on the model. Validators reject ungrounded or forbidden statements but do not correct grammar.</li>
+      <li>Dune and cloud AI integrations are optional and off by default.</li>
+      <li>Off-site backups need an external S3-compatible destination configured per installation; until one is registered and verified, they are reported as not configured. Recovery was verified on our reference installation, not on every customer environment.</li>
+      <li>WATAM DeFi Intelligence is installed per customer on their own infrastructure. A hosted, multi-tenant SaaS service is not offered.</li>
+      <li>The research examples use public blockchain data collected by the application; USD values are omitted because they depend on an external price feed. Protocol, token and network names describe the data analysed; they do not imply any affiliation or endorsement.</li>
+      <li>WATAM DeFi Intelligence is analytics and research software. It is not investment advice, makes no promise of trading or investment outcomes, and is not a regulatory certification.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#top" aria-label="WATAM DeFi Intelligence, back to top"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#111A2E" stroke="#2A3756"/><path d="M8 21.5l5-6 4 3.5 7-9" fill="none" stroke="#7EA6FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="10" r="2.6" fill="#E2B65E"/></svg><span>WATAM <span class="brand-sub">DeFi Intelligence</span></span></a>
+      <p style="margin-top:16px">Private on-chain analytics and AI intelligence software by WATAM — We Are The Art Makers. Independent: not affiliated with or endorsed by any protocol, token issuer, network or data provider it analyses; their names are trademarks of their respective owners. The research examples use only public blockchain data collected by the application over JSON-RPC. The application source is private; this repository contains only the public overview.</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>Pilot scoping and evaluation:<br><a class="email" href="mailto:admin@wearetheartmakers.com">admin@wearetheartmakers.com</a></p>
+      <p><a class="btn btn-sm" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a></p>
+    </div>
+    <div>
+      <h4>On this page</h4>
+      <ul>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#ai">AI analyst</a></li>
+        <li><a href="#research">Research examples</a></li>
+        <li><a href="#status">What's verified</a></li>
+        <li><a href="#deploy">Deployment</a></li>
+        <li><a href="#pilot">Scope a pilot</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
