@@ -255,6 +255,62 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
 .foot a{color:var(--ink-2);text-decoration:none} .foot a:hover{color:var(--ink)}
 .foot a.btn,.foot a.btn:hover{color:var(--brass-ink)}
 
+/* hero background motion: a slow read-head passes over the real VELO series; the flagged hours keep a faint pulse.
+   Decorative only, transform/opacity only, paused while the hero is off-screen. */
+.pulse .scan{opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .pulse .scan{opacity:1;animation:scan 16s linear 3.2s infinite}
+  .pulse .spike .halo{transform-box:fill-box;transform-origin:center;animation:appear .8s ease-out 2.3s forwards,breathe 3.6s ease-in-out 3.1s infinite}
+  .hero::before{animation:drift 28s ease-in-out infinite alternate}
+  .hero::after{animation:drift 34s ease-in-out infinite alternate-reverse}
+  .hero.is-off .pulse *,.hero.is-off::before,.hero.is-off::after{animation-play-state:paused}
+  @keyframes scan{from{transform:translateX(0)}to{transform:translateX(1416px)}}
+  @keyframes breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:.35}}
+  @keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-60px,30px,0)}}
+}
+
+/* analyst answer, illustrated: the question is typed, then each cited sentence arrives with its fact references */
+.ask{margin-top:34px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.ask-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:14px 22px;border-bottom:1px solid var(--line-soft);background:#0F182B}
+.ask-head b{font:600 15px/1.3 var(--display);color:var(--ink);letter-spacing:.01em}
+.ask-head span{font-size:13.5px;color:var(--ink-3)}
+.ask-body{padding:24px 22px 8px}
+.ask-q{display:grid;margin:0 0 22px;padding-left:16px;border-left:2px solid var(--blue);font-size:17px;color:var(--ink);font-weight:500}
+.ask-q > *{grid-area:1/1}
+.ask-q .typed{visibility:hidden}
+.ask-q .typed::after{content:"";display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-.15em;background:var(--blue)}
+.ask-a{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.ask-a li{color:var(--ink-2);font-size:16px;line-height:1.6}
+.ask-a li.caveat{color:var(--ink-3);font-size:15px;border-top:1px solid var(--line-soft);padding-top:12px}
+.cite{display:inline-block;margin-left:4px;padding:0 7px;border-radius:999px;border:1px solid #3A4A6E;background:#131E35;color:var(--blue);font:600 12px/20px var(--text);text-decoration:none;vertical-align:1px}
+.cite:hover,.cite:focus-visible,.cite.on{background:var(--blue);border-color:var(--blue);color:#0A1020}
+.ask-facts{margin:22px 0 0;border-top:1px solid var(--line-soft)}
+.ask-facts div{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:4px 14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line-soft);transition:background .2s ease}
+.ask-facts div:last-child{border-bottom:none}
+.ask-facts dt{color:var(--blue);font:600 13px/1 var(--text)}
+.ask-facts dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.ask-facts dd.v{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.ask-facts div.on,.ask-facts div:target{background:rgba(126,166,255,.08)}
+.ask-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:14px 22px 18px;font-size:13.5px;color:var(--ink-3)}
+.replay{font:500 14px/1 var(--text);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+.replay:hover{background:var(--raised)}
+.replay[hidden]{display:inline-block;visibility:hidden}
+.ask:not(.js) .replay{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .ask.js .ask-q .full{visibility:hidden}
+  .ask.js .ask-q .typed{visibility:visible}
+  .ask.js .ask-q .typed.done::after{animation:caret 1s steps(1) 3}
+  .ask.js .ask-a li,.ask.js .ask-facts div{opacity:0;transform:translateY(6px);transition:opacity .45s ease,transform .45s ease,background .2s ease}
+  .ask.js .ask-a li.in,.ask.js .ask-facts div.in{opacity:1;transform:none}
+  @keyframes caret{50%{opacity:0}}
+}
+.ask-q .typed.gone::after{display:none}
+@media (max-width:620px){
+  .ask-body{padding:20px 16px 4px} .ask-head,.ask-foot{padding-left:16px;padding-right:16px}
+  .ask-facts div{grid-template-columns:36px minmax(0,1fr)}
+  .ask-facts dd.v{grid-column:2;text-align:left}
+}
+
 /* responsive */
 @media (max-width:1100px){
   .hero-grid{grid-template-columns:minmax(0,1fr);gap:56px}
@@ -345,7 +401,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
 
 <main id="main">
 <section class="hero" id="top">
-  <svg class="pulse" viewBox="0 0 1440 240" aria-hidden="true" focusable="false"><defs><linearGradient id="pulse-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7EA6FF" stop-opacity=".2"/><stop offset="1" stop-color="#7EA6FF" stop-opacity="0"/></linearGradient></defs><path class="area" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1 L1416.0 226 L24.0 226 Z" fill="url(#pulse-fill)"/><line class="base" x1="24" x2="1416" y1="201.9" y2="201.9"/><path class="line" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1" pathLength="1"/><g class="spike"><circle cx="859.2" cy="75.2" r="11" class="halo"/><circle cx="859.2" cy="75.2" r="4"/><text x="871.2" y="80.2">7.43×</text></g><g class="spike"><circle cx="1068.0" cy="41.1" r="11" class="halo"/><circle cx="1068.0" cy="41.1" r="4"/><text x="1080.0" y="46.1">7.25×</text></g></svg>
+  <svg class="pulse" viewBox="0 0 1440 240" aria-hidden="true" focusable="false"><defs><linearGradient id="scan-fill" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7EA6FF" stop-opacity="0"/><stop offset="1" stop-color="#7EA6FF" stop-opacity=".07"/></linearGradient><linearGradient id="scan-head" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9C3FF" stop-opacity="0"/><stop offset=".55" stop-color="#A9C3FF" stop-opacity=".5"/><stop offset="1" stop-color="#A9C3FF" stop-opacity=".15"/></linearGradient><linearGradient id="pulse-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7EA6FF" stop-opacity=".2"/><stop offset="1" stop-color="#7EA6FF" stop-opacity="0"/></linearGradient></defs><path class="area" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1 L1416.0 226 L24.0 226 Z" fill="url(#pulse-fill)"/><g class="scan"><rect x="-56" y="60" width="80" height="166" fill="url(#scan-fill)"/><rect x="22.5" y="20" width="1.5" height="206" fill="url(#scan-head)"/></g><line class="base" x1="24" x2="1416" y1="201.9" y2="201.9"/><path class="line" d="M24.0 209.4 L58.8 220.8 L93.6 210.9 L128.4 219.9 L163.2 211.7 L198.0 187.1 L232.8 201.7 L267.6 184.3 L302.4 200.1 L337.2 216.1 L372.0 202.2 L406.8 189.1 L441.6 204.2 L476.4 209.9 L511.2 200.5 L546.0 193.5 L580.8 208.4 L615.6 220.4 L650.4 214.5 L685.2 208.2 L720.0 195.2 L754.8 201.0 L789.6 207.1 L824.4 186.1 L859.2 75.2 L894.0 194.7 L928.8 201.5 L963.6 206.5 L998.4 215.1 L1033.2 216.3 L1068.0 41.1 L1102.8 192.5 L1137.6 182.4 L1172.4 190.7 L1207.2 194.4 L1242.0 218.1 L1276.8 207.0 L1311.6 219.6 L1346.4 213.1 L1381.2 217.7 L1416.0 168.1" pathLength="1"/><g class="spike"><circle cx="859.2" cy="75.2" r="11" class="halo"/><circle cx="859.2" cy="75.2" r="4"/><text x="871.2" y="80.2">7.43×</text></g><g class="spike"><circle cx="1068.0" cy="41.1" r="11" class="halo"/><circle cx="1068.0" cy="41.1" r="4"/><text x="1080.0" y="46.1">7.25×</text></g></svg>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Self-hosted on-chain analytics for DeFi teams</span>
@@ -458,6 +514,27 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
       <div>
         <h2 id="ai-h">An AI analyst that cites its sources</h2>
         <p class="lede" style="margin-top:18px">Ask in English, Turkish or German and keep the conversation going: follow-up questions keep the token and topic. Each answer is labelled either as a validated AI answer or as a deterministic answer built from the same verified facts.</p>
+        <figure class="ask" id="ask-demo" aria-labelledby="ask-cap">
+          <div class="ask-head"><b>Conversational analyst</b><span>Illustration of the answer format — not a live query</span></div>
+          <div class="ask-body">
+            <p class="ask-q"><span class="full">What happened to VELO volume on OP Mainnet on 16 October?</span><span class="typed" aria-hidden="true"></span></p>
+            <ul class="ask-a">
+              <li>On 16 October the anomaly engine flagged three high-severity findings for VELO: token volume at 7.43× and 7.25× a baseline frozen at onset, and swap activity at 12.8×.<a class="cite" href="#fact-f1" aria-label="fact F1">F1</a><a class="cite" href="#fact-f2" aria-label="fact F2">F2</a><a class="cite" href="#fact-f3" aria-label="fact F3">F3</a></li>
+              <li>In the reviewed window, 16 Oct 12:00 to 17 Oct 00:00 UTC, the ingested pools recorded 65,568 Swap events in 12 of 12 covered hours, from 58,792 distinct transactions.<a class="cite" href="#fact-f4" aria-label="fact F4">F4</a><a class="cite" href="#fact-f5" aria-label="fact F5">F5</a></li>
+              <li>These figures cover the 6 ingested pools only, not VELO's whole market.<a class="cite" href="#fact-f6" aria-label="fact F6">F6</a></li>
+              <li class="caveat">A statistical observation — not a claim of intent or manipulation.</li>
+            </ul>
+            <dl class="ask-facts">
+              <div id="fact-f1"><dt>F1</dt><dd>Token volume ÷ frozen baseline (anomaly finding)</dd><dd class="v">7.43×</dd></div>
+              <div id="fact-f2"><dt>F2</dt><dd>Token volume ÷ frozen baseline (anomaly finding)</dd><dd class="v">7.25×</dd></div>
+              <div id="fact-f3"><dt>F3</dt><dd>Swap activity ÷ frozen baseline (anomaly finding)</dd><dd class="v">12.8×</dd></div>
+              <div id="fact-f4"><dt>F4</dt><dd>Pool Swap events in fully covered hours</dd><dd class="v">65,568</dd></div>
+              <div id="fact-f5"><dt>F5</dt><dd>Distinct transactions</dd><dd class="v">58,792</dd></div>
+              <div id="fact-f6"><dt>F6</dt><dd>Pools ingested by successful runs</dd><dd class="v">6</dd></div>
+            </dl>
+          </div>
+          <figcaption class="ask-foot" id="ask-cap"><span>Every number in an answer must match a fact the sentence cites. Figures from the reviewed VELO snapshot <a href="#case-velo">below</a>.</span><button type="button" class="replay" hidden>Replay</button></figcaption>
+        </figure>
         <div class="tw" style="margin-top:30px">
           <table>
             <tr><th scope="col">Inference option</th><th scope="col">Status</th><th scope="col">Notes</th></tr>
@@ -683,5 +760,50 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
     </div>
   </div>
 </footer>
+<script>
+(() => {
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const hero = document.querySelector('.hero');
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => hero.classList.toggle('is-off', !e.isIntersecting)).observe(hero);
+  }
+  const demo = document.getElementById('ask-demo');
+  if (!demo) return;
+  const facts = [...demo.querySelectorAll('.ask-facts div')];
+  const mark = (id, on) => { const row = demo.querySelector(id); if (row) row.classList.toggle('on', on); };
+  demo.querySelectorAll('.cite').forEach((c) => {
+    const id = c.getAttribute('href');
+    for (const [ev, on] of [['mouseenter', 1], ['focus', 1], ['mouseleave', 0], ['blur', 0]]) c.addEventListener(ev, () => mark(id, !!on));
+  });
+  if (still.matches) return;
+  demo.classList.add('js');
+  const q = demo.querySelector('.ask-q .full').textContent, typed = demo.querySelector('.ask-q .typed');
+  const lines = [...demo.querySelectorAll('.ask-a li')], replay = demo.querySelector('.replay');
+  let timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  const play = () => {
+    timers.forEach(clearTimeout); timers = []; replay.hidden = true;
+    typed.textContent = ''; typed.classList.remove('done', 'gone');
+    [...lines, ...facts].forEach((el) => el.classList.remove('in'));
+    let t = 200;
+    for (let i = 1; i <= q.length; i++) { at(t, () => { typed.textContent = q.slice(0, i); }); t += 34; }
+    at(t, () => typed.classList.add('done'));
+    t += 700;
+    lines.forEach((li) => {
+      at(t, () => {
+        li.classList.add('in');
+        li.querySelectorAll('.cite').forEach((c) => { const row = demo.querySelector(c.getAttribute('href')); if (row) row.classList.add('in'); });
+      });
+      t += li.classList.contains('caveat') ? 500 : 1100;
+    });
+    at(t, () => { facts.forEach((f) => f.classList.add('in')); typed.classList.add('gone'); replay.hidden = false; });
+  };
+  replay.addEventListener('click', play);
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); play(); } }, { threshold: 0.45 });
+    io.observe(demo);
+  } else play();
+})();
+</script>
 </body>
 </html>
