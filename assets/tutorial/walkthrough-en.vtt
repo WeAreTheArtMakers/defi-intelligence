@@ -1,0 +1,160 @@
+WEBVTT
+
+00:00:01.400 --> 00:00:06.834
+WATAM DeFi Intelligence turns on-chain swap
+data into findings your team can verify.
+
+00:00:07.294 --> 00:00:11.591
+In the next few minutes, we'll walk through
+the workflow: verified data, a token
+
+00:00:11.631 --> 00:00:14.952
+report, an anomaly finding with its
+evidence, and the analyst.
+
+00:00:16.242 --> 00:00:20.821
+When a token's trading activity suddenly
+jumps, the first question is simple: what
+
+00:00:20.861 --> 00:00:23.525
+actually happened, and can we trust the
+numbers?
+
+00:00:23.985 --> 00:00:28.568
+Every view in the platform answers with
+evidence you can check, not with a black box.
+
+00:00:29.858 --> 00:00:31.159
+Start on the Data platform.
+
+00:00:31.619 --> 00:00:36.137
+Swap events are collected from public RPC
+endpoints for historical windows.
+
+00:00:36.597 --> 00:00:41.459
+A run is published only when its coverage,
+decoding, time-window and uniqueness
+
+00:00:41.499 --> 00:00:44.561
+gates pass. If a gate fails, nothing is
+published.
+
+00:00:45.021 --> 00:00:50.409
+Below, the token table lists every token
+with verified pool-swap data, its network,
+
+00:00:50.449 --> 00:00:52.240
+contract and covered window.
+
+00:00:53.530 --> 00:00:55.503
+Select a token to open its report.
+
+00:00:55.963 --> 00:01:03.293
+For ARB on Arbitrum One, the window has 68
+verified covered hours and 64,763 pool
+
+00:01:03.333 --> 00:01:06.842
+swap events across four selected pools.
+
+00:01:07.302 --> 00:01:12.419
+The chart splits buys and sells by hour, and the
+pool table shows where the activity happened.
+
+00:01:12.879 --> 00:01:17.652
+The report also states what it does not
+cover: these are the selected pools only,
+
+00:01:17.692 --> 00:01:19.732
+and pool events are not net trades.
+
+00:01:21.022 --> 00:01:27.078
+To look at another token, the Token explorer verifies
+the contract on-chain and discovers its pools.
+
+00:01:27.538 --> 00:01:32.601
+Each pool is checked against a supported
+protocol family, so unsupported venues are
+
+00:01:32.641 --> 00:01:35.552
+listed openly instead of being silently
+dropped.
+
+00:01:36.842 --> 00:01:41.878
+Next, the Anomaly center. Filter by network
+and severity, and each finding appears
+
+00:01:41.918 --> 00:01:45.469
+with its window and the observed value
+against a baseline.
+
+00:01:45.929 --> 00:01:53.345
+For VELO on OP Mainnet, swap activity
+reached 12.8× its frozen baseline, and token
+
+00:01:53.385 --> 00:01:58.164
+volume reached 7.43× and 7.25× in two
+separate hours.
+
+00:01:59.454 --> 00:02:04.493
+Open a finding to see exactly how it was
+measured: the method and its parameters,
+
+00:02:04.533 --> 00:02:08.695
+the frozen baseline, alternative
+explanations and follow-up checks.
+
+00:02:09.155 --> 00:02:14.968
+Show SQL evidence reveals the query behind the
+series, so an analyst can reproduce the number.
+
+00:02:15.428 --> 00:02:20.889
+A finding is a statistical observation. It
+does not establish intent or manipulation.
+
+00:02:22.179 --> 00:02:25.472
+To compare two periods, choose a reference
+window and compare.
+
+00:02:25.932 --> 00:02:30.313
+A change counts as comparable only when
+every pool is covered in both windows.
+
+00:02:30.773 --> 00:02:35.246
+Here the pool set differs, so the platform
+marks the comparison as incomplete,
+
+00:02:35.286 --> 00:02:37.502
+instead of showing a misleading change.
+
+00:02:38.792 --> 00:02:42.066
+Finally, ask the Conversational analyst in
+plain language.
+
+00:02:42.526 --> 00:02:47.485
+Answers are built only from verified facts,
+and every number must match a cited fact.
+
+00:02:47.945 --> 00:02:52.695
+If no model can serve, or a sentence doesn't
+check out, you get a clearly labelled
+
+00:02:52.735 --> 00:02:55.090
+deterministic answer from the same facts.
+
+00:02:55.550 --> 00:03:00.873
+Local models are used by default. Nothing is
+sent to a cloud service unless you approve it.
+
+00:03:02.163 --> 00:03:07.376
+WATAM DeFi Intelligence is self-hosted,
+works on historical ingested windows, and
+
+00:03:07.416 --> 00:03:09.775
+states exactly which pools it covers.
+
+00:03:10.235 --> 00:03:14.456
+To see it on your own tokens, scope a
+private pilot with us at
+
+00:03:14.496 --> 00:03:16.381
+admin@wearetheartmakers.com.
