@@ -1,6 +1,7 @@
 # WATAM DeFi Intelligence
 
-**On-chain analytics your team can verify.** Self-hosted on-chain analytics for DeFi protocol, token and research teams.
+**On-chain analytics your team can verify.** On-chain analytics for DeFi protocol, token and research teams, hosted by
+WATAM or self-hosted on your infrastructure.
 
 *Your infrastructure. Your blockchain data. Verifiable intelligence.*
 
@@ -14,7 +15,7 @@ and hours it covers.
 This repository is the **public showcase**: an overview, screenshots and reviewed example results. The application
 source is private. The examples below are **reviewed, historical snapshots (October 2026)**, recomputed before
 publication from swap events the application collected over public JSON-RPC. USD values are deliberately not shown
-because they depend on an external price feed. They are not live or streaming data, and this static page does not
+because they depend on an external price feed. They are historical, not current data, and this static page does not
 connect to any API.
 
 WATAM DeFi Intelligence is independent software. It is not affiliated with or endorsed by any protocol, token issuer,
@@ -22,8 +23,8 @@ network or data provider it analyses; their names are trademarks of their respec
 
 ![One anomaly finding in the web application: hourly VELO token volume on OP Mainnet against a frozen baseline, with facts, method, limitations and provenance](assets/img/anomaly-finding.jpg)
 
-*A responsive web application (desktop, tablet and phone browsers), self-hosted on your own server — not a native mobile
-app. The screen (17 Oct 2026) shows a finding computed only from swap events collected over public JSON-RPC.*
+*A responsive web application (desktop, tablet and phone browsers), hosted by WATAM or self-hosted on your own server —
+not a native mobile app. The screen (17 Oct 2026) shows a finding computed only from swap events collected over public JSON-RPC.*
 
 ## Who it is designed for
 - **Protocols, DAOs and token teams:** how your token trades across chains and pools, with unusual activity flagged
@@ -46,19 +47,19 @@ app. The screen (17 Oct 2026) shows a finding computed only from swap events col
 
 | Capability | What it means |
 |---|---|
-| **Verified multi-chain ingestion** | Public JSON-RPC (or your own endpoints) on Base, Arbitrum One, OP Mainnet and Ethereum through Airflow into ClickHouse. Block coverage is proven per run; empty answers are confirmed by a second provider; a run is published only when every quality gate passes. |
+| **Verified multi-chain ingestion** | Public JSON-RPC (or your own endpoints) on Ethereum, Arbitrum One, OP Mainnet, Base and BNB Smart Chain through Airflow into ClickHouse. Tracked tokens are collected on a 12-hour schedule. On BNB Smart Chain collection runs forward only: windows starting more than 24 hours ago are refused. Block coverage is proven per run; empty answers are confirmed by a second provider; a run is published only when every quality gate passes. |
 | **Universal token explorer** | Any token contract on a supported network: on-chain identity check plus an independent registry check, pool discovery, a support level per pool, collection of only the missing windows, per-pool coverage, quality checks, anomaly detection and an evidence-backed report. |
-| **Receipt-verified decoders** | Uniswap v3-style, Uniswap v2-style and Solidly-style (Velodrome/Aerodrome v2) pools, supported only after decoded swaps matched transaction receipts exactly on several networks. **Uniswap v4** is verified pool by pool: six Ethereum pools are individually verified; other v4 pools are not supported. |
+| **Receipt-verified decoders** | Uniswap v3-style, Uniswap v2-style (including PancakeSwap v2), Solidly-style (Velodrome/Aerodrome v2) and PancakeSwap v3 pools from recorded factories only, supported after decoded swaps matched transaction receipts exactly. **Uniswap v4** and **PancakeSwap Infinity** (BNB Smart Chain) are verified pool by pool: only pools with an accepted verification record are ingested. |
 | **Anomaly intelligence** | Volume, activity and liquidity shifts against a baseline frozen at onset, plus concentration, buy/sell imbalance, divergence and repetitive patterns. Every finding carries facts, method, parameters, limitations and alternative explanations; none is an accusation. |
 | **Honest valuation** | USD comes from a stablecoin leg or an hourly price feed configured for the installation. Swaps without a usable price stay *unvalued*, never $0. Pool-event volume and transaction-net volume are reported separately. |
-| **AI options** | **Local models via Ollama** (tested on one machine). **Anthropic Claude API** and **OpenAI API** with your own account (integrated; optional and off by default; live calls not yet verified). **Self-hosted OpenAI-compatible servers** such as vLLM or llama.cpp (integration option; GPU serving not yet verified). |
+| **AI options** | **Local models via Ollama** (tested on one machine). **Your own Anthropic, OpenAI or OpenAI-compatible key** (integrated; optional; used only after your organisation's administrator accepts an explicit data-egress consent; local models stay the default; not yet verified by WATAM with a real provider account). **Self-hosted OpenAI-compatible servers** such as vLLM or llama.cpp (integration option; GPU serving not yet verified). |
 | **Security** | Every API route requires sign-in by default; organisation roles; personal API tokens with single-use invitations for onboarding; a sandboxed query engine that blocks file, network and extension access. |
 | **Operations and recovery** | Operations view, quality audits, an audit log, and encrypted backups that can be restore-verified on a separate, isolated server without touching production data. |
 
 ## What teams can do with it today
 - **Analyse a token pool by pool:** verify a token on-chain, find and classify its pools, collect the missing hours and
   report swaps, token volume, buyers and sellers and routing per pool, with the covered hours stated. Covers the
-  selected pools, not the token's whole market.
+  selected pools, not every venue where the token trades.
 - **Triage unusual activity:** volume, activity and liquidity shifts against a frozen baseline, plus concentration,
   imbalance and repetitive patterns — each finding with facts, method, limitations and alternative explanations.
 - **Compare two time windows:** before and after a listing, incentive change or event; marked comparable only when
@@ -102,21 +103,22 @@ One machine, not a performance promise; larger models and GPU servers have not b
 
 | Capability | Status |
 |---|---|
-| Ingestion, token explorer, anomaly engine, reports and comparisons on the four networks | Tested on real data |
-| Uniswap v3-style, v2-style and Solidly-style decoders | Tested on real data |
-| Uniswap v4: six individually verified Ethereum pools | Tested on real data |
+| Ingestion, token explorer, anomaly engine, reports and comparisons on Ethereum, Arbitrum One, OP Mainnet and Base | Tested on real data |
+| Ingestion and token analysis on BNB Smart Chain, collected forward only | Tested on real data |
+| Uniswap v3-style, v2-style (including PancakeSwap v2), Solidly-style and PancakeSwap v3 decoders, recorded factories only | Tested on real data |
+| Uniswap v4 and PancakeSwap Infinity: pools with an accepted verification record | Tested on real data, per pool |
 | Access control (sign-in on every API route, roles, personal tokens, single-use invitations) | Tested and in production use |
 | Sandboxed query engine (file, network and extension access blocked) | Tested and in production use |
 | Encrypted off-site backup to Cloudflare R2 with restore verification on a separate isolated server | Verified on our reference installation (Oct 2026) |
 | Local models via Ollama, including a multilingual multi-turn conversation | Tested on one machine |
 | Self-hosted Docker Compose installation | Tested on Docker Desktop; not yet on a customer server |
 | Kubernetes deployment | Validated on a local single-node cluster |
-| PancakeSwap pools, Solana research, one-click token analysis | Experimental |
-| Anthropic Claude API / OpenAI API | Integrated; live calls not yet verified |
-| Dune (optional, your own account) | Integrated; not verified live |
+| Solana research, one-click token analysis | Experimental |
+| Your own Anthropic, OpenAI or OpenAI-compatible AI key (explicit data-egress consent) | Integrated; not yet verified by WATAM with a real provider account |
+| Dune (optional, your own account) | Integrated; query execution not yet verified |
 | vLLM / GPU inference servers | Not yet verified |
-| Other Uniswap v4 pools, other networks, hooks that change swap amounts, native ETH | Not supported |
-| Hosted multi-tenant SaaS | Not offered |
+| Uniswap v4 and Infinity pools without a verification record, with native currencies or with hooks that change swap amounts; unrecorded factories and forks; other networks | Not supported |
+| WATAM-hosted access over HTTPS, per-organisation data access | Offered; no SLA; not an independently audited multi-tenant SaaS |
 
 ## Deployment
 | Profile | Target | Status |
@@ -133,19 +135,33 @@ These are starting points, not performance promises: capacity depends on the mea
 
 ## Limitations
 - **Analysed scope:** the networks, verified protocol families and individually verified pools listed above, and only
-  pools that are discovered and ingested. No figure here is a token's whole market.
+  pools that are discovered and ingested. No figure here covers every venue where a token trades.
 - **Pool-event volume:** a routed trade is counted in every ingested pool it passes through; transaction-net volume is
   reported separately.
-- **Time ranges:** the examples cover historical, ingested windows; nothing here is live streaming data.
-- **Findings:** statistical observations. They never establish intent, manipulation or wash trading, and addresses are
+- **Time ranges:** the examples cover historical, ingested windows; nothing here is current data. In the application,
+  tracked tokens are collected on a 12-hour schedule.
+- **Findings:** statistical observations. They never establish intent, wrongdoing or wash trading, and addresses are
   not identified entities.
 - **Local AI quality:** depends on the model. The validators reject ungrounded or forbidden statements.
-- **Deployment model:** installed per customer on their own infrastructure. A hosted, multi-tenant SaaS service is not
-  offered.
+- **Deployment model:** hosted by WATAM on its own server (each organisation sees only its own data; no SLA; not an
+  independently audited multi-tenant SaaS), or self-hosted on the customer's infrastructure.
 - **Data in the examples:** public blockchain data collected by the application; USD values omitted because they depend
   on an external price feed.
 - **No advice or guarantees:** analytics and research software. It is not investment advice, makes no promise of
   trading or investment outcomes, and is not a regulatory certification.
+
+## Buying, free token check and support
+- **Buy online:** the Evidence Snapshot (USD 900) and the Research and Team plans can be bought at
+  https://app.wearetheartmakers.com/checkout with stablecoins or by bank transfer; the access key arrives by a one-time
+  link. Pilots and self-hosted licences are by written agreement. See the
+  [pricing page](https://wearetheartmakers.github.io/defi-intelligence/pricing.html).
+- **Evidence Snapshot delivery:** within 2 business days of a confirmed payment, for a token available in the catalog;
+  access for 7 days from delivery; credited to a pilot signed within 60 days. A token not yet covered first needs about
+  7 days of collection, and on BNB Smart Chain collection runs forward only.
+- **Free token check:** send the token's network and contract address to admin@wearetheartmakers.com. The reply comes
+  within 1 business day: available, collecting (with an estimated ready date), or not covered yet.
+- **Support:** Monday–Friday, 09:00–18:00 Türkiye time (UTC+3), in English and Turkish, at admin@wearetheartmakers.com;
+  replies within one business day. No SLA or 24/7 support.
 
 ## Scope a private pilot
 The first step is a discovery conversation; if it fits, a fixed, measurable pilot scope is agreed in writing before
