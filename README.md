@@ -155,9 +155,9 @@ These are starting points, not performance promises: capacity depends on the mea
   https://app.wearetheartmakers.com/checkout with stablecoins or by bank transfer; the access key arrives by a one-time
   link. Pilots and self-hosted licences are by written agreement. See the
   [pricing page](https://wearetheartmakers.github.io/defi-intelligence/pricing.html).
-- **Evidence Snapshot delivery:** within 2 business days of a confirmed payment, for a token available in the catalog;
-  access for 7 days from delivery; credited to a pilot signed within 60 days. A token not yet covered first needs about
-  7 days of collection, and on BNB Smart Chain collection runs forward only.
+- **Evidence Snapshot:** access for 7 days from payment confirmation; the report is delivered within 2 business days of
+  a confirmed payment for a token available in the catalog; a token not yet covered first needs about 7 days of
+  collection (BNB Smart Chain collects forward only). Credited to a pilot signed within 60 days.
 - **Free token check:** send the token's network and contract address to admin@wearetheartmakers.com. The reply comes
   within 1 business day: available, collecting (with an estimated ready date), or not covered yet.
 - **Support:** Monday–Friday, 09:00–18:00 Türkiye time (UTC+3), in English and Turkish, at admin@wearetheartmakers.com;
