@@ -443,24 +443,24 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
       </div>
     </div>
   </div>
-  <div class="wrap"><p class="stage-note">Real screens from the web application: the same VELO finding as the app lays it out in a desktop, tablet (820 px) and phone (390 px) browser. Behind them, the real hourly VELO volume on OP Mainnet for 15–16 Oct 2026, with the frozen baseline dashed and the two flagged spikes marked. Historical snapshot computed from swap events collected over public JSON-RPC — not live. It is a responsive web app, not a native app.</p></div>
+  <div class="wrap"><p class="stage-note">Real screens from the web application: the same VELO finding as the app lays it out in a desktop, tablet (820 px) and phone (390 px) browser. Behind them, the real hourly VELO volume on OP Mainnet for 15–16 Oct 2026, with the frozen baseline dashed and the two flagged spikes marked. Historical snapshot computed from swap events collected over public JSON-RPC, not current data. It is a responsive web app, not a native app.</p></div>
 </section>
 
 <section class="band" aria-labelledby="coverage-h">
   <div class="wrap">
     <div class="intro">
       <h2 id="coverage-h">Built on receipt-verified data</h2>
-      <p>Swaps are read from public JSON-RPC or your own endpoints, proven complete for every block range and cross-checked before anything is published. A protocol family is supported only after its decoded swaps matched transaction receipts exactly on several networks. Uniswap v4 is verified differently: its pools share one contract and can carry hooks, so each pool is verified on its own, and only individually verified pools are ingested.</p>
+      <p>Swaps are read from public JSON-RPC or your own endpoints, proven complete for every block range and cross-checked before anything is published. A protocol family is supported only after its decoded swaps matched transaction receipts exactly on several networks. Uniswap v4 is verified differently: its pools share one contract and can carry hooks, so each pool is verified on its own, and only individually verified pools are ingested. PancakeSwap Infinity pools on BNB Smart Chain are verified the same way. A pool is ingested only if its factory is one we have recorded with receipt evidence. On BNB Smart Chain, collection runs forward only: windows starting more than 24 hours ago are refused until two independent archive providers agree.</p>
     </div>
     <dl class="ledger">
       <dt>Networks</dt>
-      <dd><span class="tag"><span class="dot"></span>Base</span><span class="tag"><span class="dot"></span>Arbitrum One</span><span class="tag"><span class="dot"></span>OP Mainnet</span><span class="tag"><span class="dot"></span>Ethereum</span></dd>
+      <dd><span class="tag"><span class="dot"></span>Ethereum</span><span class="tag"><span class="dot"></span>Arbitrum One</span><span class="tag"><span class="dot"></span>OP Mainnet</span><span class="tag"><span class="dot"></span>Base</span><span class="tag"><span class="dot"></span>BNB Smart Chain</span><span class="tag muted"><span class="dot"></span>Avalanche C-Chain: supported, no catalog tokens yet</span></dd>
       <dt>Verified protocol families</dt>
-      <dd><span class="tag"><span class="dot"></span>Uniswap v3-style</span><span class="tag"><span class="dot"></span>Uniswap v2-style</span><span class="tag"><span class="dot"></span>Solidly (Velodrome/Aerodrome v2)</span></dd>
+      <dd><span class="tag"><span class="dot"></span>Uniswap v3-style</span><span class="tag"><span class="dot"></span>Uniswap v2-style, including PancakeSwap v2</span><span class="tag"><span class="dot"></span>Solidly (Velodrome/Aerodrome v2)</span><span class="tag"><span class="dot"></span>PancakeSwap v3</span><span class="tag muted"><span class="dot"></span>Recorded factories only</span></dd>
       <dt>Individually verified pools</dt>
-      <dd><a class="tag" href="#status"><span class="dot"></span>Uniswap v4: six Ethereum pools, each verified on its own</a></dd>
+      <dd><a class="tag" href="#status"><span class="dot"></span>Uniswap v4: each pool verified on its own</a><a class="tag" href="#status"><span class="dot"></span>PancakeSwap Infinity (BNB Smart Chain): each pool verified on its own</a></dd>
       <dt>Not counted</dt>
-      <dd><span class="tag muted"><span class="dot"></span>PancakeSwap v3 (decoder only, not verified for ingestion)</span><span class="tag muted"><span class="dot"></span>Other Uniswap v4 pools and networks</span><span class="tag muted"><span class="dot"></span>v4 pools with native ETH or swap-changing hooks</span><span class="tag muted"><span class="dot"></span>Other venues</span></dd>
+      <dd><span class="tag muted"><span class="dot"></span>Unrecorded factories and forks</span><span class="tag muted"><span class="dot"></span>v4 and Infinity pools without a verification record</span><span class="tag muted"><span class="dot"></span>v4 pools with native currencies or swap-changing hooks</span><span class="tag muted"><span class="dot"></span>Infinity pools with native BNB, any hook or a dynamic fee</span><span class="tag muted"><span class="dot"></span>Other networks and venues</span></dd>
     </dl>
   </div>
 </section>
@@ -513,19 +513,19 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
         <h3>Analyse a token pool by pool</h3>
         <p class="when">Token teams, protocol analytics, research desks</p>
         <p>Paste a token contract. The application checks it on-chain, finds its pools and says which ones it can decode. It then collects the missing hours through the same gated pipeline and reports swaps, token volume, buyers and sellers, and routing per pool — with the covered hours stated.</p>
-        <p class="note" style="margin-top:10px">Covers the selected pools on supported networks, not the token's whole market.</p>
+        <p class="note" style="margin-top:10px">Covers the selected pools on supported networks, not every venue where the token trades.</p>
       </article>
       <article class="case">
         <h3>Triage unusual activity</h3>
         <p class="when">Risk, market-integrity and research teams</p>
         <p>The anomaly engine flags volume, activity and liquidity shifts against a baseline frozen at onset, plus concentration, imbalance and repetitive patterns. Every finding carries its facts, method, parameters, limitations and alternative explanations, so it can be checked before anyone acts on it.</p>
-        <p class="note" style="margin-top:10px">A statistical observation, never a claim of intent or manipulation.</p>
+        <p class="note" style="margin-top:10px">A statistical observation, never a claim of intent or wrongdoing.</p>
       </article>
       <article class="case">
         <h3>Compare two time windows</h3>
         <p class="when">Growth, treasury and research teams</p>
         <p>Compare a token's activity before and after a listing, an incentive change or an event. A comparison is marked comparable only when every pool is covered in both windows; otherwise the report says it is incomplete instead of showing a misleading change.</p>
-        <p class="note" style="margin-top:10px">Historical windows that have been ingested; not live streaming.</p>
+        <p class="note" style="margin-top:10px">Historical windows that have been ingested, not a continuous stream. Tracked tokens are collected on a 12-hour schedule.</p>
       </article>
     </div>
   </div>
@@ -538,14 +538,14 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
         <h2 id="ai-h">An AI analyst that cites its sources</h2>
         <p class="lede" style="margin-top:18px">Ask in English, Turkish or German and keep the conversation going: follow-up questions keep the token and topic. Each answer is labelled either as a validated AI answer or as a deterministic answer built from the same verified facts.</p>
         <figure class="ask" id="ask-demo" aria-labelledby="ask-cap">
-          <div class="ask-head"><b>Conversational analyst</b><span>Illustration of the answer format — not a live query</span></div>
+          <div class="ask-head"><b>Conversational analyst</b><span>Illustration of the answer format, not a query run on this page</span></div>
           <div class="ask-body">
             <p class="ask-q"><span class="full">What happened to VELO volume on OP Mainnet on 16 October?</span><span class="typed" aria-hidden="true"></span></p>
             <ul class="ask-a">
               <li>On 16 October the anomaly engine flagged three high-severity findings for VELO: token volume at 7.43× and 7.25× a baseline frozen at onset, and swap activity at 12.8×.<a class="cite" href="#fact-f1" aria-label="fact F1">F1</a><a class="cite" href="#fact-f2" aria-label="fact F2">F2</a><a class="cite" href="#fact-f3" aria-label="fact F3">F3</a></li>
               <li>In the reviewed window, 16 Oct 12:00 to 17 Oct 00:00 UTC, the ingested pools recorded 65,568 Swap events in 12 of 12 covered hours, from 58,792 distinct transactions.<a class="cite" href="#fact-f4" aria-label="fact F4">F4</a><a class="cite" href="#fact-f5" aria-label="fact F5">F5</a></li>
-              <li>These figures cover the 6 ingested pools only, not VELO's whole market.<a class="cite" href="#fact-f6" aria-label="fact F6">F6</a></li>
-              <li class="caveat">A statistical observation — not a claim of intent or manipulation.</li>
+              <li>These figures cover the 6 ingested pools only, not every venue where VELO trades.<a class="cite" href="#fact-f6" aria-label="fact F6">F6</a></li>
+              <li class="caveat">A statistical observation — not a claim of intent or wrongdoing.</li>
             </ul>
             <dl class="ask-facts">
               <div id="fact-f1"><dt>F1</dt><dd>Token volume ÷ frozen baseline (anomaly finding)</dd><dd class="v">7.43×</dd></div>
@@ -562,8 +562,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
           <table>
             <tr><th scope="col">Inference option</th><th scope="col">Status</th><th scope="col">Notes</th></tr>
             <tr><td>Local models via Ollama</td><td class="st ok">Tested</td><td>Runs on your hardware; a memory guard prevents overloading the host</td></tr>
-            <tr><td>Anthropic Claude API</td><td class="st part">Integrated</td><td>Optional and off by default; no paid call until an administrator authorises it within limits. Live calls not yet verified</td></tr>
-            <tr><td>OpenAI API</td><td class="st part">Integrated</td><td>Same controls as Claude. Live calls not yet verified</td></tr>
+            <tr><td>Your own Anthropic, OpenAI or OpenAI-compatible key</td><td class="st part">Integrated</td><td>Optional; local models stay the default. Used only after your organisation's administrator adds the key, it passes a test request, and the administrator accepts an explicit data-egress consent. Your provider's terms and charges apply. Not yet verified by WATAM with a real provider account</td></tr>
             <tr><td>Self-hosted OpenAI-compatible servers</td><td class="st part">Integration option</td><td>vLLM, llama.cpp, LM Studio or an organisation gateway through the same adapter; GPU serving not yet tested</td></tr>
           </table>
         </div>
@@ -586,14 +585,14 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
   <div class="wrap">
     <div class="intro">
       <h2 id="cases-h">Verified research examples</h2>
-      <p>Reviewed snapshots of historical windows from October 2026. Every figure here was recomputed before publication from swap events our own pipeline collected over public JSON-RPC. USD values are deliberately not shown: they depend on an external price feed. These examples illustrate the method; they are not live data and not a statement about any protocol.</p>
+      <p>Reviewed snapshots of historical windows from October 2026. Every figure here was recomputed before publication from swap events our own pipeline collected over public JSON-RPC. USD values are deliberately not shown: they depend on an external price feed. These examples illustrate the method; they are historical, not current data, and not a statement about any protocol.</p>
     </div>
     <article class="xcase" id="case-arb" aria-labelledby="case-arb-h">
       <div class="xcase-head">
         <div>
           <span class="kicker">Historical research snapshot</span>
           <h3 id="case-arb-h">ARB on Arbitrum One</h3>
-          <p class="when">14 Oct 2026, 12:00 UTC to 17 Oct 2026, 08:00 UTC · 4 ingested Uniswap v3-style pools · reviewed snapshot, not live</p>
+          <p class="when">14 Oct 2026, 12:00 UTC to 17 Oct 2026, 08:00 UTC · 4 ingested Uniswap v3-style pools · reviewed historical snapshot</p>
         </div>
         <p class="lead">Every Swap event emitted by the selected pools in this window, counted hour by hour. These are selected-pool event measurements: not the total ARB market and not transaction-net trading volume.</p>
       </div>
@@ -613,7 +612,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
           <ul class="checks">
             <li><b>Selected pools, not the market.</b> Only the four ingested pools are measured. Other pools, venues and centralised exchanges are not included.</li>
             <li><b>Pool events, not net trades.</b> A trade routed through two ingested pools is counted in both; transaction-net volume is reported separately in the application.</li>
-            <li><b>Historical.</b> A reviewed snapshot of an ingested window, published as an example. Nothing on this page is live.</li>
+            <li><b>Historical.</b> A reviewed snapshot of an ingested window, published as an example. Nothing on this page updates automatically.</li>
           </ul>
         </div>
         <div>
@@ -644,7 +643,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
         <div>
           <span class="kicker">Historical research snapshot</span>
           <h3 id="case-velo-h">VELO on OP Mainnet</h3>
-          <p class="when">16 Oct 2026, 12:00 UTC to 17 Oct 2026, 00:00 UTC · 12 pools discovered and verified, 6 ingested · reviewed snapshot, not live</p>
+          <p class="when">16 Oct 2026, 12:00 UTC to 17 Oct 2026, 00:00 UTC · 12 pools discovered and verified, 6 ingested · reviewed historical snapshot</p>
         </div>
         <p class="lead">An example of what the anomaly engine reports — and of what the data does not cover. Market coverage is partial and the report says so. USD values are not shown (see above).</p>
       </div>
@@ -664,7 +663,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
           <h4>What a finding is — and is not</h4>
           <ul class="checks">
             <li><b>A statistical observation.</b> A metric moved far from a baseline frozen at onset. The finding states the method, parameters and the data it used.</li>
-            <li><b>Never an accusation.</b> It does not establish intent, manipulation or wash trading, and addresses are not identified entities.</li>
+            <li><b>Never an accusation.</b> It does not establish intent, wrongdoing or wash trading, and addresses are not identified entities.</li>
             <li><b>Alternatives stated up front.</b> Market-wide moves, new liquidity venues, a single large participant or a listing can each explain a spike.</li>
             <li><b>Coverage is explicit.</b> Only hours covered by successful ingestion runs are analysed; partial market coverage is reported, not hidden.</li>
           </ul>
@@ -683,21 +682,24 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
     <div class="tw">
       <table>
         <tr><th scope="col">Capability</th><th scope="col">Status</th></tr>
-        <tr><td>Ingestion, token explorer, anomaly engine, reports and window comparisons on Base, Arbitrum One, OP Mainnet and Ethereum</td><td class="st ok">Tested on real data</td></tr>
-        <tr><td>Uniswap v3-style, Uniswap v2-style and Solidly-style decoders (decoded swaps matched transaction receipts exactly)</td><td class="st ok">Tested on real data</td></tr>
-        <tr><td>Uniswap v4: six individually verified Ethereum pools (PoolId/PoolKey match, two-provider agreement, sampled receipt reconciliation)</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Ingestion, token explorer, anomaly engine, reports and window comparisons on Ethereum, Arbitrum One, OP Mainnet and Base</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Ingestion and token analysis on BNB Smart Chain, collected forward only (windows starting more than 24 hours ago are refused until two independent archive providers agree)</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Uniswap v3-style, Uniswap v2-style (including PancakeSwap v2), Solidly-style and PancakeSwap v3 decoders, for recorded factories only (decoded swaps matched transaction receipts exactly)</td><td class="st ok">Tested on real data</td></tr>
+        <tr><td>Uniswap v4 and PancakeSwap Infinity (BNB Smart Chain): only pools with an accepted verification record (PoolId/PoolKey match, accounting rules, two-provider agreement, exact receipt or settlement reconciliation)</td><td class="st ok">Tested on real data, per pool</td></tr>
         <tr><td>Access control: every API route requires sign-in by default, organisation roles, personal API tokens, single-use invitations for onboarding</td><td class="st ok">Tested and in production use</td></tr>
         <tr><td>Sandboxed query engine: file, network and extension access blocked at validation and at execution</td><td class="st ok">Tested and in production use</td></tr>
         <tr><td>Encrypted off-site backup to Cloudflare R2, restore-verified on a separate isolated server</td><td class="st ok">Verified on our reference installation (Oct 2026)</td></tr>
         <tr><td>Local models via Ollama, including a multilingual multi-turn conversation</td><td class="st ok">Tested on one machine</td></tr>
         <tr><td>Self-hosted Docker Compose installation: TLS proxy, first administrator, your own RPC endpoints, upgrade and rollback</td><td class="st part">Tested on Docker Desktop</td></tr>
         <tr><td>Kubernetes deployment</td><td class="st part">Validated on a local single-node cluster</td></tr>
-        <tr><td>PancakeSwap pools, Solana research, one-click token analysis</td><td class="st part">Experimental</td></tr>
-        <tr><td>Anthropic Claude API and OpenAI API (optional, off by default, your own account)</td><td class="st part">Integrated, live calls not yet verified</td></tr>
-        <tr><td>Dune (optional, off by default, your own account)</td><td class="st part">Integrated, not verified live</td></tr>
+        <tr><td>Solana research, one-click token analysis</td><td class="st part">Experimental</td></tr>
+        <tr><td>Your own Anthropic, OpenAI or OpenAI-compatible AI key (optional; used only after an explicit data-egress consent; local models by default)</td><td class="st part">Integrated; not yet verified by WATAM with a real provider account</td></tr>
+        <tr><td>Dune (optional, off by default, your own account)</td><td class="st part">Integrated; query execution not yet verified</td></tr>
         <tr><td>vLLM and GPU inference servers</td><td class="st no">Not yet verified</td></tr>
-        <tr><td>Other Uniswap v4 pools, other networks, hooks that change swap amounts, native ETH</td><td class="st no">Not supported</td></tr>
-        <tr><td>WATAM-hosted access over HTTPS (Cloudflare), per-organisation data access; no SLA, not an independently audited multi-tenant SaaS, no self-service sign-up</td><td class="st part">Offered for pilots and subscriptions</td></tr>
+        <tr><td>Avalanche C-Chain: Uniswap v3, LFJ v1 and Pangolin v2 factories recorded with receipt evidence; no tokens in the catalog yet</td><td class="st part">Supported; ask for a token check</td></tr>
+        <tr><td>Uniswap v4 and PancakeSwap Infinity pools without a verification record; v4 pools with native currencies or hooks that change swap amounts; Infinity pools with native BNB, any hook or a dynamic fee; unrecorded factories and forks</td><td class="st no">Not supported</td></tr>
+        <tr><td>Other networks</td><td class="st no">Not offered</td></tr>
+        <tr><td>WATAM-hosted access over HTTPS (Cloudflare), per-organisation data access; no SLA, not an independently audited multi-tenant SaaS. The Evidence Snapshot and the Research and Team plans can be bought online with stablecoins or by bank transfer, and the access key arrives by a one-time link; pilots and self-hosted licences are by written agreement</td><td class="st part">Offered for pilots and subscriptions</td></tr>
       </table>
     </div>
   </div>
@@ -731,13 +733,14 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
     <div class="tw">
       <table>
         <tr><th scope="col">Step</th><th scope="col">Price (USD, excl. VAT/KDV)</th><th scope="col">What you get</th></tr>
-        <tr><td>Live demo call</td><td>Free</td><td>30 minutes on our verified examples and your questions</td></tr>
-        <tr><td>Evidence Snapshot</td><td>900</td><td>Your token, up to 7 days of history, delivered in 7 days; credited to a pilot signed within 60 days</td></tr>
+        <tr><td>Free demo call</td><td>Free</td><td>30 minutes on our verified examples and your questions</td></tr>
+        <tr><td>Evidence Snapshot</td><td>900</td><td>Your token, up to 7 days of history. Access for 7 days from payment confirmation; the report is delivered within 2 business days of a confirmed payment for a token available in the catalog; a token not yet covered first needs about 7 days of collection (BNB Smart Chain collects forward only). Because access runs from payment confirmation, not from delivery, wait until your token is Available before you pay. Credited to a pilot signed within 60 days</td></tr>
         <tr><td>Discovery pilot</td><td>6,500 (design partners 4,500)</td><td>One question, 6 weeks, hosted by WATAM</td></tr>
         <tr><td>Self-hosted pilot</td><td>9,500 (design partners 7,000)</td><td>The same pilot on your own infrastructure, 8 weeks</td></tr>
       </table>
     </div>
     <p class="note">The Evidence Snapshot and the Research and Team subscriptions can be <a href="https://app.wearetheartmakers.com/checkout">bought online</a> with USDC/USDT or by bank transfer. Customers in Türkiye can pay in TRY at the CBRT exchange rate on the invoice date. <a href="pricing.html">See all prices, subscriptions and how payment works</a>.</p>
+    <p class="note">Free token check: send the token's network and contract address to <a href="mailto:admin@wearetheartmakers.com">admin@wearetheartmakers.com</a>. We reply within 1 business day: available, collecting (with an estimated ready date), or not covered yet. <a href="pricing.html#check-h">How the token check works</a>.</p>
   </div>
 </section>
 
@@ -764,13 +767,13 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
   <div class="wrap">
     <div class="intro"><h2 id="limits-h">Limitations</h2><p>Stated plainly, so you know what the numbers cover.</p></div>
     <ul class="limits">
-      <li>Only the listed networks, verified protocol families and individually verified pools are analysed, and only pools that were discovered and ingested. Other venues are not counted, so no figure on this page is a token's whole market.</li>
+      <li>Only the listed networks, verified protocol families and individually verified pools are analysed, and only pools that were discovered and ingested. Other venues are not counted, so no figure on this page covers every venue where a token trades.</li>
       <li>Pool-event volume counts a routed trade in every ingested pool it passes through. Transaction-net volume is reported separately.</li>
-      <li>The examples on this page cover historical, ingested windows. Nothing here is live, and the page connects to no API.</li>
+      <li>The examples on this page cover historical, ingested windows. Nothing here is current data, and the page connects to no API. In the application, tracked tokens are collected on a 12-hour schedule.</li>
       <li>AI answer quality depends on the model. Validators reject ungrounded or forbidden statements but do not correct grammar.</li>
-      <li>Dune and cloud AI integrations are optional and off by default.</li>
+      <li>Dune and cloud AI are optional and off by default; local models are the default. If your organisation adds its own AI provider key, prompts containing its verified facts go to that provider only after its administrator accepts an explicit data-egress consent.</li>
       <li>Off-site backups need an external S3-compatible destination configured per installation; until one is registered and verified, they are reported as not configured. Recovery was verified on our reference installation, not on every customer environment.</li>
-      <li>WATAM-hosted pilots and subscriptions run on WATAM's own server, accessed over HTTPS through Cloudflare, where each organisation sees only its own data; self-hosted pilots and licences run on the customer's infrastructure. The hosted option has no SLA, is not an independently audited multi-tenant SaaS, and has no self-service sign-up.</li>
+      <li>WATAM-hosted pilots and subscriptions run on WATAM's own server, accessed over HTTPS through Cloudflare, where each organisation sees only its own data; self-hosted pilots and licences run on the customer's infrastructure. The hosted option has no SLA and is not an independently audited multi-tenant SaaS. The Evidence Snapshot and the Research and Team plans can be bought online with stablecoins or by bank transfer, and the access key arrives by a one-time link; pilots and self-hosted licences are by written agreement.</li>
       <li>The research examples use public blockchain data collected by the application; USD values are omitted because they depend on an external price feed. Protocol, token and network names describe the data analysed; they do not imply any affiliation or endorsement.</li>
       <li>WATAM DeFi Intelligence is analytics and research software. It is not investment advice, makes no promise of trading or investment outcomes, and is not a regulatory certification.</li>
     </ul>
@@ -787,6 +790,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
     <div>
       <h4>Contact</h4>
       <p>Pilot scoping and evaluation:<br><a class="email" href="mailto:admin@wearetheartmakers.com">admin@wearetheartmakers.com</a></p>
+      <p>Support: Monday–Friday, 09:00–18:00 Türkiye time (UTC+3), in English and Turkish. We reply within one business day.</p>
       <p><a class="btn btn-sm" href="mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&amp;body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A">Discuss a pilot</a></p>
     </div>
     <div>
