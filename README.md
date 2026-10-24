@@ -3,7 +3,7 @@
 **On-chain analytics your team can verify.** On-chain analytics for DeFi protocol, token and research teams, hosted by
 WATAM or self-hosted on your infrastructure.
 
-*Your infrastructure. Your blockchain data. Verifiable intelligence.*
+*Your blockchain data. Verifiable intelligence. Hosted by WATAM or on your infrastructure.*
 
 Homepage → https://wearetheartmakers.github.io/defi-intelligence/ · **[Discuss a pilot](mailto:admin@wearetheartmakers.com?subject=WATAM%20DeFi%20Intelligence%20%E2%80%94%20Pilot%20scoping%20conversation&body=Organisation%3A%0AContact%20person%3A%0ABusiness%20email%3A%0AWhat%20you%20would%20like%20to%20analyse%20%28networks%2C%20tokens%2C%20protocols%29%3A%0APreferred%20deployment%20%28your%20own%20server%20%2F%20private%20cloud%29%3A%0APreferred%20AI%20%28local%20models%20%2F%20your%20own%20cloud%20AI%20account%20%2F%20none%29%3A%0ATimeline%3A%0A%0A%28Please%20do%20not%20include%20confidential%20datasets%2C%20API%20credentials%2C%20private%20keys%20or%20passwords.%29%0A)**
 
@@ -117,7 +117,9 @@ One machine, not a performance promise; larger models and GPU servers have not b
 | Your own Anthropic, OpenAI or OpenAI-compatible AI key (explicit data-egress consent) | Integrated; not yet verified by WATAM with a real provider account |
 | Dune (optional, your own account) | Integrated; query execution not yet verified |
 | vLLM / GPU inference servers | Not yet verified |
-| Uniswap v4 and Infinity pools without a verification record, with native currencies or with hooks that change swap amounts; unrecorded factories and forks; other networks | Not supported |
+| Avalanche C-Chain (Uniswap v3, LFJ v1, Pangolin v2 factories recorded); no tokens in the catalog yet | Supported; ask for a token check |
+| Uniswap v4 and Infinity pools without a verification record; v4 pools with native currencies or hooks that change swap amounts; Infinity pools with native BNB, any hook or a dynamic fee; unrecorded factories and forks | Not supported |
+| Other networks | Not offered |
 | WATAM-hosted access over HTTPS, per-organisation data access | Offered; no SLA; not an independently audited multi-tenant SaaS |
 
 ## Deployment
@@ -157,7 +159,8 @@ These are starting points, not performance promises: capacity depends on the mea
   [pricing page](https://wearetheartmakers.github.io/defi-intelligence/pricing.html).
 - **Evidence Snapshot:** access for 7 days from payment confirmation; the report is delivered within 2 business days of
   a confirmed payment for a token available in the catalog; a token not yet covered first needs about 7 days of
-  collection (BNB Smart Chain collects forward only). Credited to a pilot signed within 60 days.
+  collection (BNB Smart Chain collects forward only). Access runs from payment confirmation, not from delivery, so if
+  your token is not Available yet, wait until it is before you pay. Credited to a pilot signed within 60 days.
 - **Free token check:** send the token's network and contract address to admin@wearetheartmakers.com. The reply comes
   within 1 business day: available, collecting (with an estimated ready date), or not covered yet.
 - **Support:** Monday–Friday, 09:00–18:00 Türkiye time (UTC+3), in English and Turkish, at admin@wearetheartmakers.com;

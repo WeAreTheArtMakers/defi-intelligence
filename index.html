@@ -454,13 +454,13 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
     </div>
     <dl class="ledger">
       <dt>Networks</dt>
-      <dd><span class="tag"><span class="dot"></span>Ethereum</span><span class="tag"><span class="dot"></span>Arbitrum One</span><span class="tag"><span class="dot"></span>OP Mainnet</span><span class="tag"><span class="dot"></span>Base</span><span class="tag"><span class="dot"></span>BNB Smart Chain</span></dd>
+      <dd><span class="tag"><span class="dot"></span>Ethereum</span><span class="tag"><span class="dot"></span>Arbitrum One</span><span class="tag"><span class="dot"></span>OP Mainnet</span><span class="tag"><span class="dot"></span>Base</span><span class="tag"><span class="dot"></span>BNB Smart Chain</span><span class="tag muted"><span class="dot"></span>Avalanche C-Chain: supported, no catalog tokens yet</span></dd>
       <dt>Verified protocol families</dt>
       <dd><span class="tag"><span class="dot"></span>Uniswap v3-style</span><span class="tag"><span class="dot"></span>Uniswap v2-style, including PancakeSwap v2</span><span class="tag"><span class="dot"></span>Solidly (Velodrome/Aerodrome v2)</span><span class="tag"><span class="dot"></span>PancakeSwap v3</span><span class="tag muted"><span class="dot"></span>Recorded factories only</span></dd>
       <dt>Individually verified pools</dt>
       <dd><a class="tag" href="#status"><span class="dot"></span>Uniswap v4: each pool verified on its own</a><a class="tag" href="#status"><span class="dot"></span>PancakeSwap Infinity (BNB Smart Chain): each pool verified on its own</a></dd>
       <dt>Not counted</dt>
-      <dd><span class="tag muted"><span class="dot"></span>Unrecorded factories and forks</span><span class="tag muted"><span class="dot"></span>v4 and Infinity pools without a verification record</span><span class="tag muted"><span class="dot"></span>v4 and Infinity pools with native currencies or swap-changing hooks</span><span class="tag muted"><span class="dot"></span>Other networks and venues</span></dd>
+      <dd><span class="tag muted"><span class="dot"></span>Unrecorded factories and forks</span><span class="tag muted"><span class="dot"></span>v4 and Infinity pools without a verification record</span><span class="tag muted"><span class="dot"></span>v4 pools with native currencies or swap-changing hooks</span><span class="tag muted"><span class="dot"></span>Infinity pools with native BNB, any hook or a dynamic fee</span><span class="tag muted"><span class="dot"></span>Other networks and venues</span></dd>
     </dl>
   </div>
 </section>
@@ -696,7 +696,9 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
         <tr><td>Your own Anthropic, OpenAI or OpenAI-compatible AI key (optional; used only after an explicit data-egress consent; local models by default)</td><td class="st part">Integrated; not yet verified by WATAM with a real provider account</td></tr>
         <tr><td>Dune (optional, off by default, your own account)</td><td class="st part">Integrated; query execution not yet verified</td></tr>
         <tr><td>vLLM and GPU inference servers</td><td class="st no">Not yet verified</td></tr>
-        <tr><td>Uniswap v4 and PancakeSwap Infinity pools without a verification record, with native currencies or with hooks that change swap amounts; unrecorded factories and forks; other networks</td><td class="st no">Not supported</td></tr>
+        <tr><td>Avalanche C-Chain: Uniswap v3, LFJ v1 and Pangolin v2 factories recorded with receipt evidence; no tokens in the catalog yet</td><td class="st part">Supported; ask for a token check</td></tr>
+        <tr><td>Uniswap v4 and PancakeSwap Infinity pools without a verification record; v4 pools with native currencies or hooks that change swap amounts; Infinity pools with native BNB, any hook or a dynamic fee; unrecorded factories and forks</td><td class="st no">Not supported</td></tr>
+        <tr><td>Other networks</td><td class="st no">Not offered</td></tr>
         <tr><td>WATAM-hosted access over HTTPS (Cloudflare), per-organisation data access; no SLA, not an independently audited multi-tenant SaaS. The Evidence Snapshot and the Research and Team plans can be bought online with stablecoins or by bank transfer, and the access key arrives by a one-time link; pilots and self-hosted licences are by written agreement</td><td class="st part">Offered for pilots and subscriptions</td></tr>
       </table>
     </div>
@@ -732,7 +734,7 @@ footer{border-top:1px solid var(--line-soft);padding:56px 0 64px;color:var(--ink
       <table>
         <tr><th scope="col">Step</th><th scope="col">Price (USD, excl. VAT/KDV)</th><th scope="col">What you get</th></tr>
         <tr><td>Free demo call</td><td>Free</td><td>30 minutes on our verified examples and your questions</td></tr>
-        <tr><td>Evidence Snapshot</td><td>900</td><td>Your token, up to 7 days of history. Access for 7 days from payment confirmation; the report is delivered within 2 business days of a confirmed payment for a token available in the catalog; a token not yet covered first needs about 7 days of collection (BNB Smart Chain collects forward only). Credited to a pilot signed within 60 days</td></tr>
+        <tr><td>Evidence Snapshot</td><td>900</td><td>Your token, up to 7 days of history. Access for 7 days from payment confirmation; the report is delivered within 2 business days of a confirmed payment for a token available in the catalog; a token not yet covered first needs about 7 days of collection (BNB Smart Chain collects forward only). Because access runs from payment confirmation, not from delivery, wait until your token is Available before you pay. Credited to a pilot signed within 60 days</td></tr>
         <tr><td>Discovery pilot</td><td>6,500 (design partners 4,500)</td><td>One question, 6 weeks, hosted by WATAM</td></tr>
         <tr><td>Self-hosted pilot</td><td>9,500 (design partners 7,000)</td><td>The same pilot on your own infrastructure, 8 weeks</td></tr>
       </table>
