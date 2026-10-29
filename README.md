@@ -47,7 +47,7 @@ not a native mobile app. The screen (17 Oct 2026) shows a finding computed only 
 
 | Capability | What it means |
 |---|---|
-| **Verified multi-chain ingestion** | Public JSON-RPC (or your own endpoints) on Ethereum, Arbitrum One, OP Mainnet, Base and BNB Smart Chain through Airflow into ClickHouse. Tracked tokens are collected on a 12-hour schedule. On BNB Smart Chain collection runs forward only: windows starting more than 24 hours ago are refused. Block coverage is proven per run; empty answers are confirmed by a second provider; a run is published only when every quality gate passes. |
+| **Verified multi-chain ingestion** | Public JSON-RPC (or your own endpoints) on Ethereum, Arbitrum One, OP Mainnet, Base and BNB Smart Chain (available), and Avalanche C-Chain, Monad, Solana and TON (collecting: catalog tokens become available after 72 hours of continuous verified coverage), through Airflow into ClickHouse. Tracked tokens are collected on a 12-hour schedule. On BNB Smart Chain collection runs forward only: windows starting more than 8 days (192 hours) ago are refused. Block coverage is proven per run; empty answers are confirmed by a second provider; a run is published only when every quality gate passes. |
 | **Universal token explorer** | Any token contract on a supported network: on-chain identity check plus an independent registry check, pool discovery, a support level per pool, collection of only the missing windows, per-pool coverage, quality checks, anomaly detection and an evidence-backed report. |
 | **Receipt-verified decoders** | Uniswap v3-style, Uniswap v2-style (including PancakeSwap v2), Solidly-style (Velodrome/Aerodrome v2) and PancakeSwap v3 pools from recorded factories only, supported after decoded swaps matched transaction receipts exactly. **Uniswap v4** and **PancakeSwap Infinity** (BNB Smart Chain) are verified pool by pool: only pools with an accepted verification record are ingested. |
 | **Anomaly intelligence** | Volume, activity and liquidity shifts against a baseline frozen at onset, plus concentration, buy/sell imbalance, divergence and repetitive patterns. Every finding carries facts, method, parameters, limitations and alternative explanations; none is an accusation. |
@@ -113,11 +113,13 @@ One machine, not a performance promise; larger models and GPU servers have not b
 | Local models via Ollama, including a multilingual multi-turn conversation | Tested on one machine |
 | Self-hosted Docker Compose installation | Tested on Docker Desktop; not yet on a customer server |
 | Kubernetes deployment | Validated on a local single-node cluster |
-| Solana research, one-click token analysis | Experimental |
+| Solana: research, one-click token analysis, catalog collection of pinned Raydium, Orca, Meteora and PumpSwap pools; no anomaly findings yet | Collecting; experimental |
+| TON: catalog collection of pinned STON.fi v1/v2 and DeDust pools (two providers per window); no anomaly findings yet | Collecting; experimental |
 | Your own Anthropic, OpenAI or OpenAI-compatible AI key (explicit data-egress consent) | Integrated; not yet verified by WATAM with a real provider account |
 | Dune (optional, your own account) | Integrated; query execution not yet verified |
 | vLLM / GPU inference servers | Not yet verified |
-| Avalanche C-Chain (Uniswap v3, LFJ v1, Pangolin v2 factories recorded); no tokens in the catalog yet | Supported; ask for a token check |
+| Avalanche C-Chain (Uniswap v3, LFJ v1, Pangolin v2, Pharaoh v3 factories recorded); catalog tokens collecting since 29 Oct 2026 | Collecting; available after the 72-hour verification period |
+| Monad (Uniswap v2, Uniswap v3, PancakeSwap v3 factories recorded; Uniswap v4 per pool); catalog tokens collecting since 29 Oct 2026, history from 23 Oct 2026 | Collecting; available after the 72-hour verification period |
 | Uniswap v4 and Infinity pools without a verification record; v4 pools with native currencies or hooks that change swap amounts; Infinity pools with native BNB, any hook or a dynamic fee; unrecorded factories and forks | Not supported |
 | Other networks | Not offered |
 | WATAM-hosted access over HTTPS, per-organisation data access | Offered; no SLA; not an independently audited multi-tenant SaaS |
